@@ -14,7 +14,7 @@ UnFreeze
 Commands requiring PLM permission:
 Size
 `Questions/Answers`
-q: I get errors in the console when someone is brought to the Tutorial
-a: Check the Config file, there is a tutorialgodmode permission there, check if it is enabled, if not, it means the plugin cannot automatically issue Godmode for the Tutorial
-q: I get errors in the plugin operation
+q: I get errors in the console when someone is brought to the Tutorial\n
+a: Check the Config file, there is a tutorialgodmode permission there, check if it is enabled, if not, it means the plugin cannot automatically issue Godmode for the Tutorial\n
+q: I get errors in the plugin operation\n
 a: Contact theinkdemon in Discord, on the NWAPI server
