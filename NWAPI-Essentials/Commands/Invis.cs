@@ -1,7 +1,5 @@
 ﻿using CommandSystem;
 using CustomPlayerEffects;
-using InventorySystem.Items.Usables;
-using PluginAPI.Core;
 using RemoteAdmin;
 using System;
 

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Xml.Linq;
 
 namespace NWAPI_Essentials
 {
@@ -15,5 +14,14 @@ namespace NWAPI_Essentials
         [Description("Active god mod for Tutorial?.")]
 
         public bool Tutorialgodmode { get; set; } = false;
+        [Description("Active report player BC?")]
+
+        public bool bcreport { get; set; } = false;
+        [Description("BC message")]
+
+        public string bcmessage { get; set; } = "Reporting";
+        [Description("EnableAutofftogle?. Not recommended for servers where FF is enabled")]
+
+        public bool autofftoggle { get; set; } = false;
     }
 }

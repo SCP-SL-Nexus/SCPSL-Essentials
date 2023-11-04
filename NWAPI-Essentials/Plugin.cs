@@ -1,9 +1,6 @@
-﻿using PluginAPI.Core;
-using PluginAPI.Core.Attributes;
+﻿using PluginAPI.Core.Attributes;
 using PluginAPI.Enums;
 using PluginAPI.Events;
-using System;
-using System.IO;
 
 namespace NWAPI_Essentials
 {
@@ -14,7 +11,7 @@ namespace NWAPI_Essentials
         public Config Config;
 
         [PluginPriority(LoadPriority.Medium)]
-        [PluginEntryPoint("NW-Essentials", "1.0.0", "Add more admin commands", "Jevil")]
+        [PluginEntryPoint("NWAPI-Essentials", "1.0.1", "Add more admin commands", "Jevil")]
 
         public void LoadPlugin()
         {

@@ -2,12 +2,7 @@
 using PluginAPI.Core;
 using PluginAPI.Enums;
 using PlayerRoles;
-using GameCore;
-using System.IO;
-using System;
-using PluginAPI.Roles;
-using YamlDotNet.Serialization;
-using static MapGeneration.ImageGenerator;
+using static RoundSummary;
 
 namespace NWAPI_Essentials
 {
@@ -27,6 +22,36 @@ namespace NWAPI_Essentials
             }
             else
                 player.IsGodModeEnabled = false;
+        }
+       [PluginEvent(ServerEventType.PlayerReport)]
+        public void Report(Player player, Player target, string reason)
+        {
+            if (!Config.bcreport)
+                return;
+                        
+            string message = $"{player.Nickname} {Config.bcmessage} {target.Nickname} {reason}";
+            Server.Broadcast.BroadcastMessage(message);
+        }
+        [PluginEvent(ServerEventType.RoundEnd)]
+        public void RoundEnd(LeadingTeam leading)
+        {
+            if (!Config.autofftoggle)
+                return;
+
+            if (Server.FriendlyFire)
+            {
+                Server.FriendlyFire = true;
+            }
+        }
+        [PluginEvent(ServerEventType.RoundStart)]
+        public void RoundStart()
+        {
+            if (!Config.autofftoggle)
+                return;
+            if (Server.FriendlyFire)
+            {
+                Server.FriendlyFire = false;
+            }
         }
     }
 }
