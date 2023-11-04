@@ -2,6 +2,7 @@
 using PluginAPI.Core;
 using RemoteAdmin;
 using System;
+using System.Security.Policy;
 using UnityEngine;
 
 namespace NWAPI_Essentials.Commands
@@ -47,45 +48,26 @@ namespace NWAPI_Essentials.Commands
                 return false;
             }
 
-            float sizeX = 1f;
-            if (float.TryParse(arguments.At(1), out float parsedSizeX))
-            {
-                if (parsedSizeX <= 0f || parsedSizeX > 10f)
-                {
-                    response = "Player size must be between 0.1 and 10.";
-                    return false;
-                }
-                sizeX = parsedSizeX;
+            if (!float.TryParse(arguments.At(1), out float sizeX) || !float.TryParse(arguments.At(2), out float sizeY) || !float.TryParse(arguments.At(3), out float sizeZ))
+{
+                response = "Invalid size values";
+                return false;
             }
-
-            float sizeY = 1f;
-            if (float.TryParse(arguments.At(2), out float parsedSizeY))
+            if (sizeX <= 0f || sizeX > 10f || sizeY <= 0f || sizeY > 10f || sizeY <= 0f || sizeZ > 10f)
             {
-                if (parsedSizeY <= 0f || parsedSizeY > 10f)
-                {
-                    response = "Player size must be between 0.1 and 10.";
-                    return false;
-                }
-                sizeY = parsedSizeY;
+                response = "Player size must be between 0.1 and 10.";
+                return false;
             }
-
-            float sizeZ = 1f;
-            if (float.TryParse(arguments.At(3), out float parsedSizeZ))
-            {
-                if (parsedSizeZ <= 0f || parsedSizeZ > 10f)
-                {
-                    response = "Player size must be between 0.1 and 10.";
-                    return false;
-                }
-                sizeZ = parsedSizeZ;
-            }
-
             playerObject.transform.localScale = new Vector3(sizeX, sizeY, sizeZ);
 
-            playerObject.transform.position += Vector3.up * (sizeY - 1f);
+            Camera playerCamera = playerObject.GetComponentInChildren<Camera>();
+            if (playerCamera != null)
+            {
+                playerCamera.transform.localScale = new Vector3(sizeX, sizeY, sizeZ);
+            }
 
-            response = $"Player {playerId}'s size has been changed to {sizeX}, {sizeY}, {sizeZ}.";
-            return true;
+             response = $"Player {playerId}'s size has been changed to {sizeX}, {sizeY}, {sizeZ}.";
+             return true;
         }
     }
 }
