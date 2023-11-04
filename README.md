@@ -27,6 +27,8 @@ Commands requiring PLM permission:
 
 Size
 
+`Additional features in the Config plugin, GodmodeTutorial, autofftogle and bcreport`
+
 `If you have an error when changing the class to the tutorial, check if you have Godmode enabled for the Tutorial in the plugin configs`
 
 `About other bugs in the plugin write theinkdemon on discord or request a code change`
