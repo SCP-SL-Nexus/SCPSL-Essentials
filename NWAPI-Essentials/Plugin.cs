@@ -18,7 +18,12 @@ namespace NWAPI_Essentials
             if (!Config.IsEnabled)
                 return;
                 Singletion = this;
-                EventManager.RegisterEvents<Events>(this);
+            if (!Config.GodmodeTutorial)
+                return;
+                EventManager.RegisterEvents<Events.GodmodeforTutorial>(this);
+            if (!Config.autofftogle)
+                return;
+                EventManager.RegisterEvents<Events.autoffroggle>(this);
         }
     }
 }

@@ -81,7 +81,8 @@
     <Compile Include="Commands\UnFreeze.cs" />
     <Compile Include="Commands\Visible.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="Events.cs" />
+    <Compile Include="Events\autoffroggle.cs" />
+    <Compile Include="Events\GodmodeforTutorial.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
