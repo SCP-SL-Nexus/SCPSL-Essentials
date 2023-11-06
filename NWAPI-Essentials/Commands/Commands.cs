@@ -6,9 +6,9 @@ namespace NWAPI_Essentials.Commands
     internal class Commands
     {
         [CommandHandler(typeof(RemoteAdminCommandHandler))]
-        public class BetterDropsCommand : ParentCommand
+        public class CommandsEs : ParentCommand
         {
-            public BetterDropsCommand() => LoadGeneratedCommands();
+            public CommandsEs() => LoadGeneratedCommands();
 
             public sealed override void LoadGeneratedCommands()
             {
