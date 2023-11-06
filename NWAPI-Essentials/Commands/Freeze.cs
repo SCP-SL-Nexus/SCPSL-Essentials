@@ -11,7 +11,7 @@ namespace NWAPI_Essentials.Commands
     {
         public static Freeze Instance { get; } = new Freeze();
         public string Command { get; } = "Freeze";
-        public string[] Aliases { get; } = { "f" };
+        public string[] Aliases { get; } = Array.Empty<string>();
         public string Description { get; } = "Freeze a player for Breaking rules";
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)

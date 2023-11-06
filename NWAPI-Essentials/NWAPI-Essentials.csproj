@@ -73,8 +73,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\Cheatcheckpassed.cs" />
-    <Compile Include="Commands\CheatCheck.cs" />
     <Compile Include="Commands\Commands.cs" />
     <Compile Include="Commands\Invis.cs" />
     <Compile Include="Commands\Freeze.cs" />

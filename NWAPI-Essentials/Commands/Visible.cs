@@ -9,7 +9,7 @@ namespace NWAPI_Essentials.Commands
     {
             public static Visible Instance { get; } = new Visible();
             public string Command { get; } = "Visible";
-            public string[] Aliases { get; } = { "vis" };
+            public string[] Aliases { get; } = Array.Empty<string>();
             public string Description { get; } = "Make a Admin to Visible";
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)

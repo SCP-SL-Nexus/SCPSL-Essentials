@@ -11,7 +11,7 @@ namespace NWAPI_Essentials.Commands
     {
         public static UnFreeze Instance { get; } = new UnFreeze();
         public string Command { get; } = "UnFreeze";
-        public string[] Aliases { get; } = { "unf" };
+        public string[] Aliases { get; } = Array.Empty<string>();
         public string Description { get; } = "UnFreeze a player";
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
