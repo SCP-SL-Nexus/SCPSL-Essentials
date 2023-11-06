@@ -11,7 +11,7 @@ namespace NWAPI_Essentials.Commands
     {
         public static Size Instance { get; } = new Size();
         public string Command { get; } = "Size";
-        public string[] Aliases { get; } = Array.Empty<string>();
+        public string[] Aliases { get; } = { "s" };
         public string Description { get; } = "Size a player";
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)

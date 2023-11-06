@@ -9,7 +9,7 @@ namespace NWAPI_Essentials.Commands
     {
         public static Invis Instance { get; } = new Invis();
         public string Command { get; } = "Invis";
-        public string[] Aliases { get; } = Array.Empty<string>();
+        public string[] Aliases { get; } = { "inv" };
         public string Description { get; } = "Make a Admin to Invis";
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)

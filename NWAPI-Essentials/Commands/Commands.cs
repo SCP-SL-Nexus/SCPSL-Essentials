@@ -18,14 +18,20 @@ namespace NWAPI_Essentials.Commands
                 RegisterCommand(Freeze.Instance);
                 RegisterCommand(UnFreeze.Instance);
                 RegisterCommand(Size.Instance);
+                RegisterCommand(CheatCheck.Instance);
+                RegisterCommand(Cheatcheckpassed.Instance);
             }
 
             protected override bool ExecuteParent(ArraySegment<string> arguments, ICommandSender sender, out string response)
             {
-                response = "Essentials commands: TPS, Invis, Freeze, UnFreeze, Size";
+                response = "\nPlease enter a valid subcommand:";
+
+                foreach (ICommand command in AllCommands)
+                {
+                  response += $"\n\n<color=yellow><b>- {command.Command} ({string.Join(", ", command.Aliases)})</b></color>\n<color=white>{command.Description}</color>";
+                }
                 return false;
             }
-
             public override string Command { get; } = "Et";
             public override string[] Aliases { get; } = Array.Empty<string>();
             public override string Description { get; } = "EssentialsCommands.";
