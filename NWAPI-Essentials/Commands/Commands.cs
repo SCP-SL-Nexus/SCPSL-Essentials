@@ -18,6 +18,8 @@ namespace NWAPI_Essentials.Commands
                 RegisterCommand(Freeze.Instance);
                 RegisterCommand(UnFreeze.Instance);
                 RegisterCommand(Size.Instance);
+                RegisterCommand(Cheatcheckpassed.Instance);
+                RegisterCommand(CheatCheck.Instance);
             }
 
             protected override bool ExecuteParent(ArraySegment<string> arguments, ICommandSender sender, out string response)
