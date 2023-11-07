@@ -11,7 +11,7 @@ namespace NWAPI_Essentials
         public Config Config;
 
         [PluginPriority(LoadPriority.Medium)]
-        [PluginEntryPoint("NWAPI-Essentials", "1.0.1", "Add more admin commands", "Jevil")]
+        [PluginEntryPoint("NWAPI-Essentials", "1.0.2", "Add more admin commands", "Jevil")]
 
         public void LoadPlugin()
         {
