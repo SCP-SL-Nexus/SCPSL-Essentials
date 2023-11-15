@@ -24,7 +24,12 @@ namespace NWAPI_Essentials.Commands
 
             protected override bool ExecuteParent(ArraySegment<string> arguments, ICommandSender sender, out string response)
             {
-                response = "Essentials commands: TPS, Invis, Freeze, UnFreeze, Size";
+                response = "\nPlease enter a valid subcommand:";
+
+                foreach (ICommand command in AllCommands)
+                {
+                   response += $"\n\n<color=yellow><b>- {command.Command} ({string.Join(", ", command.Aliases)})</b></color>\n<color=white>{command.Description}</color>";
+                }
                 return false;
             }
 
