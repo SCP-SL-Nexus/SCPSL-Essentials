@@ -3,7 +3,7 @@ Add in your SCPSL more commands ( After a while, there will be more functionalit
 
 This plugin works on NWAPI
 
-`It adds commands such as: TPS, Invis, Visible, Freeze, UnFreeze, Size`
+`It adds commands such as: TPS, Invis, Visible, Freeze, UnFreeze, Size, CheatCheck, CheatCheckPassed`
 
 `Core Team - et`
 
