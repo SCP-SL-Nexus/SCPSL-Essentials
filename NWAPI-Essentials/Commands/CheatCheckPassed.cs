@@ -4,12 +4,7 @@ using PluginAPI.Core.Attributes;
 using PluginAPI.Core;
 using RemoteAdmin;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using static MapGeneration.ImageGenerator;
 
 namespace NWAPI_Essentials
 {
@@ -60,7 +55,7 @@ namespace NWAPI_Essentials
             if (player != null)
             {
                 player.SetRole(RoleTypeId.Spectator);
-                Log.Info("Player is passed CheatCheck");
+                player.SendBroadcast("Cheat Check Pass", 5);
             }
 
             response = "Player role changed to Spectator.";

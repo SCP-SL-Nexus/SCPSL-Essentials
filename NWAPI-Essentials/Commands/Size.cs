@@ -2,7 +2,6 @@
 using PluginAPI.Core;
 using RemoteAdmin;
 using System;
-using System.Security.Policy;
 using UnityEngine;
 
 namespace NWAPI_Essentials.Commands

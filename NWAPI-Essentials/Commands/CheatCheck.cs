@@ -1,16 +1,10 @@
 ﻿using CommandSystem;
-using CustomPlayerEffects;
 using PlayerRoles;
 using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
 using RemoteAdmin;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using static MapGeneration.ImageGenerator;
 
 namespace NWAPI_Essentials
 {
@@ -61,7 +55,7 @@ namespace NWAPI_Essentials
             if (player != null)
             {
                 player.SetRole(RoleTypeId.Overwatch);
-                Log.Info("Player is called for CheatCheck");
+                player.SendBroadcast("Cheat Check Start", 5);
             }
 
             response = "Player role changed to Overwatch.";
