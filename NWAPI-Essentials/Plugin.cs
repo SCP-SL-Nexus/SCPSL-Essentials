@@ -18,19 +18,19 @@ namespace NWAPI_Essentials
             if (!Config.IsEnabled)
                 return;
                 Singletion = this;
-            if (!Config.GodmodeTutorial != true)
+            if (!Config.GodmodeTutorial == true)
             {
                EventManager.RegisterEvents<Events.GodmodeforTutorial>(this);
             }
-            if (!Config.autofftogle != true)
+            if (!Config.autofftogle == true)
             {
                 EventManager.RegisterEvents<Events.autoffroggle>(this);
             }
-            if (!Config.tutorialnottriger != true)
+            if (!Config.tutorialnottriger == true)
             {
                 EventManager.RegisterEvents<Events.nottrigger>(this);
             }
-            if (!Config.bc_report != true) 
+            if (!Config.bc_report == true) 
             {
                 EventManager.RegisterEvents<Events.BCreport>(this);
             }
