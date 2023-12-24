@@ -73,6 +73,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\Adminsonserver.cs" />
     <Compile Include="Commands\CheatCheck.cs" />
     <Compile Include="Commands\CheatCheckPassed.cs" />
     <Compile Include="Commands\Commands.cs" />
@@ -84,7 +85,10 @@
     <Compile Include="Commands\Visible.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Events\autoffroggle.cs" />
+    <Compile Include="Events\BCreport.cs" />
+    <Compile Include="Events\Commands.cs" />
     <Compile Include="Events\GodmodeforTutorial.cs" />
+    <Compile Include="Events\nottrigger.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

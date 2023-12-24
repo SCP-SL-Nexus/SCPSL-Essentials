@@ -40,34 +40,22 @@ namespace NWAPI_Essentials.Commands
                 return false;
             }
 
-            GameObject playerObject = Player.Get(playerId)?.GameObject;
-            if (playerObject == null)
+            Player player = Player.Get(playerId);
+            if (player == null)
             {
                 response = $"No player found with ID: {playerId}";
                 return false;
             }
 
-            if (!float.TryParse(arguments.At(1), out float sizeX) || !float.TryParse(arguments.At(2), out float sizeY) || !float.TryParse(arguments.At(3), out float sizeZ))
-{
+            if (!float.TryParse(arguments.At(1), out float x) || !float.TryParse(arguments.At(2), out float y) || !float.TryParse(arguments.At(3), out float z))
+            {
                 response = "Invalid size values";
                 return false;
             }
-            if (sizeX <= 0f || sizeX > 10f || sizeY <= 0f || sizeY > 10f || sizeY <= 0f || sizeZ > 10f)
-            {
-                response = "Player size must be between 0.1 and 10.";
-                return false;
-            }
-            playerObject.transform.localScale = new Vector3(sizeX, sizeY, sizeZ);
 
-            Camera playerCamera = playerObject.GetComponentInChildren<Camera>();
-            if (playerCamera != null)
-            {
-                playerCamera.transform.localScale = new Vector3(sizeX, sizeY, sizeZ);
-            }
-
-             response = $"Player {playerId}'s size has been changed to {sizeX}, {sizeY}, {sizeZ}.";
-             return true;
+            Events.Commands.SetPlayerScale(player, new Vector3(x, y, z));
+            response = $"Player {playerId}'s size has been changed to {x}, {y}, {z}.";
+            return true;
         }
     }
 }
-

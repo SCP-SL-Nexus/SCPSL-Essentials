@@ -20,6 +20,7 @@ namespace NWAPI_Essentials.Commands
                 RegisterCommand(Size.Instance);
                 RegisterCommand(Cheatcheckpassed.Instance);
                 RegisterCommand(CheatCheck.Instance);
+                RegisterCommand(Adminsonserver.Instance);
             }
 
             protected override bool ExecuteParent(ArraySegment<string> arguments, ICommandSender sender, out string response)
