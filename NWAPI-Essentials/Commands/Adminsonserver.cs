@@ -13,9 +13,9 @@ namespace NWAPI_Essentials.Commands
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            if (!sender.CheckPermission(PlayerPermissions.PlayersManagement))
+            if (!sender.CheckPermission(PlayerPermissions.Overwatch))
             {
-                response = "You don't have permission to use this command! (Permission name: PlayersManagement)";
+                response = "You don't have permission to use this command! (Permission name: Overwatch)";
                 return false;
             }
             foreach (Player p in Player.GetPlayers())

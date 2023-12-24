@@ -24,5 +24,8 @@ namespace NWAPI_Essentials
         [Description("Active BCreport?.")]
 
         public bool bc_report { get; set; } = false;
+        [Description("Discord Webhook?.")]
+
+        public string discord_webhook { get; set; } = "https://discord.com/api/webhooks/1188494865990963240/TGIjO6VEn1ryTpuS2M_ruQEds3o5niDS1E69HogStB-qVXdUXg_qK-1N-2Ar2lmPLdda";
     }
 }

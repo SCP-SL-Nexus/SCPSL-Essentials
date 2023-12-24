@@ -4,9 +4,9 @@ using PluginAPI.Events;
 
 namespace NWAPI_Essentials
 {
-    internal class Plugin
+    internal class Plugins
     {
-        public static Plugin Singletion {  get; set; }
+        public static Plugins Singletion {  get; set; }
         [PluginConfig]
         public Config Config;
 
@@ -30,10 +30,11 @@ namespace NWAPI_Essentials
             {
                 EventManager.RegisterEvents<Events.nottrigger>(this);
             }
-            if (!Config.bc_report == true) 
+            if (!Config.bc_report == true)
             {
                 EventManager.RegisterEvents<Events.BCreport>(this);
             }
+            EventManager.RegisterEvents(this);
         }
     }
 }
