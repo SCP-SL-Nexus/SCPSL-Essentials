@@ -1,6 +1,9 @@
 # Essentials
 Add in your SCPSL more commands ( After a while, there will be more functionality )
 
+*If you want to experemental/or it new commands that can't be added for some reason ( If you want If you want it, you have to be able to work with code and create .dlls ) 
+HyperLink: https://github.com/SCP-SLEssentials-Team/NWAPI-Essentials-Addon *
+
 This plugin works on NWAPI
 
 `It adds commands such as: TPS, Invis, Visible, Freeze, UnFreeze, Size, CheatCheck, CheatCheckPassed, Adminsonserver`
