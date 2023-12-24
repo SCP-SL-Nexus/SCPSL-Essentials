@@ -22,7 +22,7 @@ namespace NWAPI_Essentials.Events
                     }
                     else
                     {
-                        Log.Debug("Error")
+                        Log.Debug("Error");
                     }
                 }
             }
