@@ -3,7 +3,7 @@ Add in your SCPSL more commands ( After a while, there will be more functionalit
 
 This plugin works on NWAPI
 
-`It adds commands such as: TPS, Invis, Visible, Freeze, UnFreeze, Size, CheatCheck, CheatCheckPassed`
+`It adds commands such as: TPS, Invis, Visible, Freeze, UnFreeze, Size, CheatCheck, CheatCheckPassed, Adminsonserver`
 
 `Core Team - et`
 
@@ -27,13 +27,15 @@ Commands requiring PLM permission:
 
 Size
 
+Adminsonserver
+
 Commands requiring Overwatch permission:
 
 CheatCheck
 
 Cheatcheckpassed
 
-`Additional features in the Config plugin, GodmodeTutorial, autofftogle`
+`Additional features in the Config plugin, GodmodeTutorial, autofftogle, nottrigger and BCreport`
 
 `If you have an error when changing the class to the tutorial, check if you have Godmode enabled for the Tutorial in the plugin configs`
 
