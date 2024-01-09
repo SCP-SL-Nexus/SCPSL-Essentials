@@ -1,6 +1,6 @@
 # Essentials
 <a href="https://discord.com/invite/eNJfZyhqj8">
-  <img src="https://img.shields.io/discord/656673194693885975?logo=discord" alt="Essentials Community">
+  <img src="" alt="Essentials Community">
 </a>
 
 Add in your SCPSL more commands ( After a while, there will be more functionality )
