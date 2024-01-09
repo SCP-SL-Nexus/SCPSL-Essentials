@@ -1,8 +1,9 @@
 # Essentials
-Add in your SCPSL more commands ( After a while, there will be more functionality )
+<a href="https://discord.com/invite/eNJfZyhqj8">
+  <img src="https://img.shields.io/discord/656673194693885975?logo=discord" alt="Essentials Community">
+</a>
 
-*If you want to experemental/or it new commands that can't be added for some reason ( If you want If you want it, you have to be able to work with code and create .dlls ) 
-HyperLink: https://github.com/SCP-SLEssentials-Team/NWAPI-Essentials-Addon *
+Add in your SCPSL more commands ( After a while, there will be more functionality )
 
 This plugin works on NWAPI
 
