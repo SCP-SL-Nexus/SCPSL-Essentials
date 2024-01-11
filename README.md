@@ -39,7 +39,11 @@ CheatCheck
 
 Cheatcheckpassed
 
-`Additional features in the Config plugin, GodmodeTutorial, autofftogle, nottrigger and BCreport`
+Log
+
+Warn
+
+`Additional features in the Config plugin, GodmodeTutorial, autofftogle, autoban log and BCreport`
 
 `If you have an error when changing the class to the tutorial, check if you have Godmode enabled for the Tutorial in the plugin configs`
 
