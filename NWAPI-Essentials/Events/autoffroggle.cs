@@ -13,31 +13,12 @@ namespace NWAPI_Essentials.Events
         [PluginEvent(ServerEventType.RoundEnd)]
         public void RoundEnd(LeadingTeam leading)
         {
-            switch (leading)
-            {
-                case LeadingTeam.Anomalies:
-                    Server.FriendlyFire = true;
-                    break;
-                case LeadingTeam.ChaosInsurgency:
-                    Server.FriendlyFire = true;
-                    break;
-                case LeadingTeam.FacilityForces:
-                    Server.FriendlyFire = true;
-                    break;
-                case LeadingTeam.Draw:
-                    Server.FriendlyFire = true;
-                    break;
-                default:
-                    break;
-            }
+            Server.FriendlyFire = true;
         }
-        [PluginEvent(ServerEventType.RoundStart)]
+        [PluginEvent(ServerEventType.WaitingForPlayers)]
         public void RoundStart()
         {
-            if (Server.FriendlyFire)
-            {
-                Server.FriendlyFire = false;
-            }
+            Server.FriendlyFire = false;
         }
     }
 }

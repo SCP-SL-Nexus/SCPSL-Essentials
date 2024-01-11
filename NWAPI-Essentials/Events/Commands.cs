@@ -10,11 +10,6 @@ namespace NWAPI_Essentials.Events
         public static void SetPlayerScale(Player target, Vector3 scale)
         {
             GameObject go = target.GameObject;
-            Camera playerCamera = go.GetComponentInChildren<Camera>();
-            if (playerCamera != null)
-            {
-                playerCamera.transform.localPosition = new Vector3(0f, scale.y / 2f, -2f);
-            }
             if (go.transform.localScale == scale)
                 return;
             try

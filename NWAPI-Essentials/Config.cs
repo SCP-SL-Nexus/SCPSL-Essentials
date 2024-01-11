@@ -17,15 +17,22 @@ namespace NWAPI_Essentials
         [Description("Enable auto ff on Roundend? Not recomended for server the ff Enable?.")]
 
         public bool autofftogle { get; set; } = false;
-        [Description("Active tutorial not trigger SCP?.")]
-
-        public bool tutorialnottriger { get; set; } = false;
 
         [Description("Active BCreport?.")]
 
         public bool bc_report { get; set; } = false;
-        [Description("Discord Webhook?.")]
+        [Description("Discord Webhook ( if URL =https://discord.com/api/webhooks/ADD_YOUR_URL, command don't work )?.")]
 
-        public string discord_webhook { get; set; } = "https://discord.com/api/webhooks/1188494865990963240/TGIjO6VEn1ryTpuS2M_ruQEds3o5niDS1E69HogStB-qVXdUXg_qK-1N-2Ar2lmPLdda";
+        public string discord_webhook { get; set; } = "https://discord.com/api/webhooks/ADD_YOUR_URL";
+
+        [Description("Active log autoban?")]
+
+        public bool log = false;
+        [Description("URL for Log for autoban and warn")]
+
+        public string discord_webhook_autoban_warn { get; set; } = "https://discord.com/api/webhooks/ADD_YOUR_URL";
+        [Description("ServerName for autoban")]
+
+        public string ServerName = "";
     }
 }

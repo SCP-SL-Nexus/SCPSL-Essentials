@@ -107,7 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\Adminsonserver.cs" />
+    <Compile Include="Commands\AdminLog.cs" />
     <Compile Include="Commands\CheatCheck.cs" />
     <Compile Include="Commands\CheatCheckPassed.cs" />
     <Compile Include="Commands\Commands.cs" />
@@ -117,12 +117,13 @@
     <Compile Include="Commands\TPS.cs" />
     <Compile Include="Commands\UnFreeze.cs" />
     <Compile Include="Commands\Visible.cs" />
+    <Compile Include="Commands\Warn.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Events\autoffroggle.cs" />
+    <Compile Include="Events\BanLog.cs" />
     <Compile Include="Events\BCreport.cs" />
     <Compile Include="Events\Commands.cs" />
     <Compile Include="Events\GodmodeforTutorial.cs" />
-    <Compile Include="Events\nottrigger.cs" />
     <Compile Include="Plugins.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

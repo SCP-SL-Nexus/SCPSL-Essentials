@@ -1,4 +1,5 @@
 ﻿using CommandSystem;
+using PluginAPI.Core.Attributes;
 using System;
 
 namespace NWAPI_Essentials.Commands
@@ -8,6 +9,8 @@ namespace NWAPI_Essentials.Commands
         [CommandHandler(typeof(RemoteAdminCommandHandler))]
         public class CommandsEs : ParentCommand
         {
+            [PluginConfig]
+            public Config Config;
             public CommandsEs() => LoadGeneratedCommands();
 
             public sealed override void LoadGeneratedCommands()
@@ -20,7 +23,8 @@ namespace NWAPI_Essentials.Commands
                 RegisterCommand(Size.Instance);
                 RegisterCommand(Cheatcheckpassed.Instance);
                 RegisterCommand(CheatCheck.Instance);
-                RegisterCommand(Adminsonserver.Instance);
+                RegisterCommand(AdminLog.Instance);
+                RegisterCommand(Warn.Instance);
             }
 
             protected override bool ExecuteParent(ArraySegment<string> arguments, ICommandSender sender, out string response)

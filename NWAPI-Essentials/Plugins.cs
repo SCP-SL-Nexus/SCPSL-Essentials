@@ -11,7 +11,7 @@ namespace NWAPI_Essentials
         public Config Config;
 
         [PluginPriority(LoadPriority.Medium)]
-        [PluginEntryPoint("NWAPI-Essentials", "1.0.5", "Add more admin commands", "Jevil")]
+        [PluginEntryPoint("NWAPI-Essentials", "1.0.6", "Add more admin commands", "Frisk")]
 
         public void LoadPlugin()
         {
@@ -26,13 +26,13 @@ namespace NWAPI_Essentials
             {
                 EventManager.RegisterEvents<Events.autoffroggle>(this);
             }
-            if (!Config.tutorialnottriger == true)
-            {
-                EventManager.RegisterEvents<Events.nottrigger>(this);
-            }
             if (!Config.bc_report == true)
             {
                 EventManager.RegisterEvents<Events.BCreport>(this);
+            }
+            if (!Config.log == true)
+            {
+                EventManager.RegisterEvents<Events.Commands>(this);
             }
             EventManager.RegisterEvents(this);
         }
