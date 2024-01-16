@@ -43,7 +43,7 @@ Log
 
 Warn
 
-`Additional features in the Config plugin, GodmodeTutorial, autofftogle, autoban log and BCreport`
+`Additional features in the Config plugin, GodmodeTutorial, autofftogle, autoban log, BCreport and Save Overwatch`
 
 `If you have an error when changing the class to the tutorial, check if you have Godmode enabled for the Tutorial in the plugin configs`
 
