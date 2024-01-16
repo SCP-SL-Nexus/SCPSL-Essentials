@@ -7,6 +7,7 @@ namespace NWAPI_Essentials.Commands
     internal class Commands
     {
         [CommandHandler(typeof(RemoteAdminCommandHandler))]
+        [CommandHandler(typeof(GameConsoleCommandHandler))]
         public class CommandsEs : ParentCommand
         {
             [PluginConfig]

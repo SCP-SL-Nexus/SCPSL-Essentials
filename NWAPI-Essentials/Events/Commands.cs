@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace NWAPI_Essentials.Events
 {
-    internal class Commands
+    internal static class Commands
     {
         public static void SetPlayerScale(Player target, Vector3 scale)
         {

@@ -4,7 +4,7 @@ using PluginAPI.Enums;
 
 namespace NWAPI_Essentials.Events
 {
-    public class BCreport
+    internal class BCreport
     {
         [PluginConfig]
         public Config Config;
@@ -18,7 +18,14 @@ namespace NWAPI_Essentials.Events
                 {
                     if (p.RemoteAdminAccess == true)
                     {
-                        p.SendBroadcast($"<color=red> {ply.Nickname} <color=yellow> Reported on</color> <color=red> {ply2.Nickname} </color><color=yellow>for</color> <color=red> {reason}" , 9);
+                        if (Config.language == "en")
+                        {
+                            p.SendBroadcast($"<color=red> {ply.Nickname} <color=yellow> Reported on</color> <color=red> {ply2.Nickname} </color><color=yellow>for</color> <color=red> {reason}", 9);
+                        }
+                        else
+                        {
+                            p.SendBroadcast($"<color=red> {ply.Nickname} <color=yellow> Пожаловался на on</color> <color=red> {ply2.Nickname} </color><color=yellow>за</color> <color=red> {reason}", 9);
+                        }
                     }
                     else
                     {

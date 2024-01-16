@@ -13,8 +13,17 @@ namespace NWAPI_Essentials.Commands
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            response = $"Server TPS: {Server.TPS}";
-            return true;
+            var config = Plugins.Singleton.Config;
+            if (config.language == "en")
+            {
+                response = $"Server TPS: {Server.TPS}";
+                return true;
+            }
+            else
+            {
+                response = $"TPS Сервера: {Server.TPS}";
+                return true;
+            }
         }
     }
 }

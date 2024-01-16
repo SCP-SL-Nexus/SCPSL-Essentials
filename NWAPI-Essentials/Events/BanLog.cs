@@ -16,7 +16,7 @@ namespace NWAPI_Essentials.Events
         {
             if (player != null)
             {
-                var serverName = Config.ServerName;
+                var serverName = Config.server_name;
                 var bannerNickname = player;
 
                 using (var httpClient = new HttpClient())
@@ -34,7 +34,7 @@ namespace NWAPI_Essentials.Events
                     responseTask.Wait();
                 }
                 {
-                    Log.Debug("player in null");
+                    Log.Debug("player is null");
                 }
             }
         }
