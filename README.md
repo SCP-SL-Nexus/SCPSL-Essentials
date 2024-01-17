@@ -33,8 +33,6 @@ Commands requiring PLM permission:
 
 Size
 
-Adminsonserver
-
 Commands requiring Overwatch permission:
 
 CheatCheck
