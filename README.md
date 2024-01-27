@@ -1,8 +1,8 @@
 # Essentials
-[![EssentialsCommunity](https://img.shields.io/discord/1188494824001773620)](https://discord.com/invite/eNJfZyhqj8)
-![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/SCP-SLEssentials-Team/SCPSL-Essentials/total)
+[![EssentialsCommunity](https://img.shields.io/discord/1188494824001773620?style=for-the-badge)](https://discord.com/invite/eNJfZyhqj8)
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/SCP-SLEssentials-Team/SCPSL-Essentials/total?style=for-the-badge)
 <a href="https://github.com/SCP-SLEssentials-Team/SCPSL-Essentials/releases">
-<img src="https://img.shields.io/github/v/release/SCP-SLEssentials-Team/SCPSL-Essentials" alt="Releases">
+<img src="https://img.shields.io/github/v/release/SCP-SLEssentials-Team/SCPSL-Essentials?display_name=release&style=for-the-badge" alt="Releases">
 </a>
 
 Add in your SCPSL more commands ( After a while, there will be more functionality )
