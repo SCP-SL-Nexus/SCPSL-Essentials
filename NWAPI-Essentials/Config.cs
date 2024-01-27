@@ -4,13 +4,21 @@ namespace NWAPI_Essentials
 {
     internal class Config
     {
-        public Config() {}
+        public Config() { }
 
         [Description("Active Essentials?.")]
         public bool IsEnabled { get; set; } = true;
 
         [Description("Whether or not to show debug messages.")]
         public bool Debug { get; set; } = false;
+        [Description("Active welcome broadcast?.")]
+        public bool welcome_bc { get; set; } = false;
+
+        [Description("Welcome broadcast message. Use HTML attributes for custom this.")]
+        public string Welcome_bc_meg { get; set; } = "";
+
+        [Description("Welcome broadcast message - duration.")]
+        public int Welcome_bc_dur { get; set; } = 4;
 
         [Description("Godmode for tutorial?.")]
         public bool GodmodeTutorial { get; set; } = false;
@@ -22,8 +30,10 @@ namespace NWAPI_Essentials
         public bool bc_report { get; set; } = false;
         [Description("Active Save Overwacth?.")]
         public bool ov { get; set; } = false;
-        [Description("Discord Webhook ( if URL =https://discord.com/api/webhooks/ADD_YOUR_URL, command don't work )?.")]
+        [Description("Discord Webhook ( if URL =https://discord.com/api/webhooks/ADD_YOUR_URL, command don't work ).")]
         public string discord_webhook { get; set; } = "https://discord.com/api/webhooks/ADD_YOUR_URL";
+        [Description("Discord Webhook's style ( embed and text ).")]
+        public string discord_webhook_style { get; set; } = "text";
 
         [Description("Active log autoban?")]
         public bool log { get; set; } = false;

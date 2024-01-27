@@ -3,8 +3,6 @@ using System;
 using System.Linq;
 using System.Net.Http;
 using PluginAPI.Core;
-using PluginAPI.Core.Attributes;
-using System.Diagnostics.Eventing.Reader;
 
 namespace NWAPI_Essentials.Commands
 {
@@ -30,7 +28,6 @@ namespace NWAPI_Essentials.Commands
                     return false;
                 }
             }
-
             string message = string.Join(" ", arguments.ToArray());
             var pl = Player.Get(sender);
             string user = pl.Nickname;
@@ -40,8 +37,9 @@ namespace NWAPI_Essentials.Commands
                 {
                     var payload = new
                     {
-                        content = message,
+                        content = config.discord_webhook_style == "text" ? message : null,
                         username = user,
+                        embeds = config.discord_webhook_style == "embed" ? new[] { new { title = "Log", description = $"```{message}```", color = 2031871 } } : null,
                     };
                     var jsonPayload = Newtonsoft.Json.JsonConvert.SerializeObject(payload);
                     var httpContent = new StringContent(jsonPayload, System.Text.Encoding.UTF8, "application/json");

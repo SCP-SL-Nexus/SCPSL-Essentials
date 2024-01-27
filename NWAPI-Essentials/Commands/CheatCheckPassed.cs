@@ -1,17 +1,13 @@
 ﻿using CommandSystem;
 using PlayerRoles;
-using PluginAPI.Core.Attributes;
 using PluginAPI.Core;
 using RemoteAdmin;
 using System;
-using UnityEngine;
 
 namespace NWAPI_Essentials
 {
     internal class Cheatcheckpassed : ICommand
     {
-        [PluginConfig]
-        public Config Config;
         public static Cheatcheckpassed Instance { get; } = new Cheatcheckpassed();
         public string Command { get; } = "Cheatcheckpassed";
         public string[] Aliases { get; } = { "ccp" };

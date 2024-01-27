@@ -1,36 +1,34 @@
 ﻿using CommandSystem;
-using PlayerRoles;
 using PluginAPI.Core;
 using RemoteAdmin;
 using System;
-using UnityEngine;
+using System.Linq;
 
-namespace NWAPI_Essentials
+namespace NWAPI_Essentials.Commands
 {
-    internal class CheatCheck : ICommand
+    internal class Showhint : ICommand
     {
-        public static CheatCheck Instance { get; } = new CheatCheck();
-        public string Command { get; } = "CheatCheck";
-        public string[] Aliases { get; } = { "cc" };
-        public string Description { get; } = "Check player a Cheats";
-
+        public static Showhint Instance { get; } = new Showhint();
+        public string Command { get; } = "Showhint";
+        public string[] Aliases { get; } = { "Sh" };
+        public string Description { get; } = "Showhint for player";
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
             var config = Plugins.Singleton.Config;
-            if (!sender.CheckPermission(PlayerPermissions.Overwatch))
+            if (!sender.CheckPermission(PlayerPermissions.Broadcasting))
             {
                 if (config.language == "en")
                 {
-                    response = "You don't have permission to use this command! (Permission name: Overwatch)";
+                    response = "You don't have permission to use this command! (Permission name: Broadcasting)";
                     return false;
                 }
                 else
                 {
-                    response = "У вас нет разрешения на эту команду! (Название разрешения: Overwatch)";
+                    response = "У вас нет разрешения на эту команду! (Название разрешения: Broadcasting)";
                     return false;
                 }
             }
-
+            string message = string.Join(" ", arguments.ToArray());
             if (!(sender is PlayerCommandSender playerSender))
             {
                 if (config.language == "en")
@@ -44,7 +42,6 @@ namespace NWAPI_Essentials
                     return false;
                 }
             }
-
             if (arguments.Count < 1)
             {
                 if (config.language == "en")
@@ -58,7 +55,6 @@ namespace NWAPI_Essentials
                     return false;
                 }
             }
-
             bool parsed = int.TryParse(arguments.At(0), out int playerId);
             if (!parsed)
             {
@@ -73,44 +69,17 @@ namespace NWAPI_Essentials
                     return false;
                 }
             }
-
-            GameObject playerObject = Player.Get(playerId)?.GameObject;
-            if (playerObject == null)
-            {
-                if (config.language == "en")
-                {
-                    response = "No player found with that ID.";
-                    return false;
-                }
-                else
-                {
-                    response = "Игрок с таким ID не найден.";
-                    return false;
-                }
-            }
-
-            Player player = Player.Get(playerId);
-            if (player != null)
-            {
-                player.SetRole(RoleTypeId.Overwatch);
-                if (config.language == "en")
-                {
-                    player.SendBroadcast("Cheat Check Start", 5);
-                }
-                else
-                {
-                    player.SendBroadcast("Проверка на читы началась", 5);
-                }
-            }
+            Player pl = Player.Get(playerId);
+            pl.ReceiveHint(message);
             if (config.language == "en")
             {
-                response = "Player role changed to Overwatch.";
-                return true;
+                response = "Hint show.";
+                return false;
             }
             else
             {
-                response = "Роль игрока изменена на Overwatch.";
-                return true;
+                response = "Hint был показан.";
+                return false;
             }
         }
     }

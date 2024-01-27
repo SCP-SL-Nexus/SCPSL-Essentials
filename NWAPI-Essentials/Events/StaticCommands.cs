@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace NWAPI_Essentials.Events
 {
-    internal static class Commands
+    internal static class StaticCommands
     {
         public static void SetPlayerScale(Player target, Vector3 scale)
         {
@@ -14,13 +14,18 @@ namespace NWAPI_Essentials.Events
                 return;
             try
             {
-                NetworkIdentity identity = target.ReferenceHub.networkIdentity;
                 go.transform.localScale = scale;
+                RpcUpdatePlayerScale(target, scale);
             }
-            catch (Exception error)
+            catch (Exception e)
             {
-                Log.Info($"Set Scale error: {error}");
+                Log.Info($"Set Scale error: {e}");
             }
+        }
+        [ClientRpc]
+        public static void RpcUpdatePlayerScale(Player target, Vector3 scale)
+        {
+            target.GameObject.transform.localScale = scale;
         }
         public static void SetPlayerScale(Player target, float scale) => SetPlayerScale(target, Vector3.one * scale);
     }

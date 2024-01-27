@@ -29,7 +29,6 @@ namespace NWAPI_Essentials.Commands
                     return false;
                 }
             }
-
             if (!(sender is PlayerCommandSender playerSender))
             {
                 if (config.language == "en")
@@ -43,7 +42,6 @@ namespace NWAPI_Essentials.Commands
                     return false;
                 }
             }
-
             if (arguments.Count < 4)
             {
                 if (config.language == "en")
@@ -57,7 +55,6 @@ namespace NWAPI_Essentials.Commands
                     return false;
                 }
             }
-
             bool parsed = int.TryParse(arguments.At(0), out int playerId);
             if (!parsed)
             {
@@ -72,7 +69,6 @@ namespace NWAPI_Essentials.Commands
                     return false;
                 }
             }
-
             Player player = Player.Get(playerId);
             if (player == null)
             {
@@ -87,7 +83,6 @@ namespace NWAPI_Essentials.Commands
                     return false;
                 }
             }
-
             if (!float.TryParse(arguments.At(1), out float x) || !float.TryParse(arguments.At(2), out float y) || !float.TryParse(arguments.At(3), out float z))
             {
                 if (config.language == "en")
@@ -101,8 +96,8 @@ namespace NWAPI_Essentials.Commands
                     return false;
                 }
             }
-
-            Events.Commands.SetPlayerScale(player, new Vector3(x, y, z));
+            Vector3 scale = new Vector3(x, y, z);
+            Events.StaticCommands.SetPlayerScale(player, scale);
             if (config.language == "en")
             {
                 response = $"Player {playerId}'s size has been changed to {x}, {y}, {z}.";

@@ -152,6 +152,7 @@
     <Compile Include="Commands\Commands.cs" />
     <Compile Include="Commands\Invis.cs" />
     <Compile Include="Commands\Freeze.cs" />
+    <Compile Include="Commands\Showhint.cs" />
     <Compile Include="Commands\Size.cs" />
     <Compile Include="Commands\TPS.cs" />
     <Compile Include="Commands\UnFreeze.cs" />
@@ -161,9 +162,10 @@
     <Compile Include="Events\autoffroggle.cs" />
     <Compile Include="Events\BanLog.cs" />
     <Compile Include="Events\BCreport.cs" />
-    <Compile Include="Events\Commands.cs" />
+    <Compile Include="Events\StaticCommands.cs" />
     <Compile Include="Events\GodmodeforTutorial.cs" />
     <Compile Include="Events\overwatch.cs" />
+    <Compile Include="Events\Welcome.cs" />
     <Compile Include="Plugins.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

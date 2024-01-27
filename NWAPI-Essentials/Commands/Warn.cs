@@ -1,11 +1,9 @@
 ﻿using CommandSystem;
 using PluginAPI.Core;
-using PluginAPI.Core.Attributes;
 using RemoteAdmin;
 using System;
 using System.Linq;
 using System.Net.Http;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace NWAPI_Essentials.Commands
 {
@@ -77,7 +75,7 @@ namespace NWAPI_Essentials.Commands
                 }
             }
             string text;
-            string message = string.Join(" ", arguments.ToArray());
+            string message = string.Join(" ", arguments.Skip(1).ToArray());
             var playerSender = sender as PlayerCommandSender;
             string ply = playerSender.Nickname;
             if (config.language == "en")
@@ -96,8 +94,9 @@ namespace NWAPI_Essentials.Commands
                 {
                     var payload = new
                     {
+                        content = config.discord_webhook_style == "text" ? text : null,
                         username = ply,
-                        content = text,
+                        embeds = config.discord_webhook_style == "embed" ? new[] { new { title = "Warn", description = $"```{text}```", color = 2031871 } } : null,
                     };
 
                     var jsonPayload = Newtonsoft.Json.JsonConvert.SerializeObject(payload);

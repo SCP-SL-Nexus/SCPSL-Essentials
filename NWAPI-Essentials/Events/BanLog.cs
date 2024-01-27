@@ -18,7 +18,6 @@ namespace NWAPI_Essentials.Events
             {
                 var serverName = Config.server_name;
                 var bannerNickname = player;
-
                 using (var httpClient = new HttpClient())
                 {
                     var payload = new
