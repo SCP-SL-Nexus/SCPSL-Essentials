@@ -11,6 +11,8 @@ namespace NWAPI_Essentials
 
         [Description("Whether or not to show debug messages.")]
         public bool Debug { get; set; } = false;
+        [Description("Active check version?")]
+        public bool Check { get; set; } = true;
         [Description("Active welcome broadcast?.")]
         public bool welcome_bc { get; set; } = false;
 
