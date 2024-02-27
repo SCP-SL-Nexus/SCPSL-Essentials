@@ -24,6 +24,9 @@ namespace NWAPI_Essentials.Commands
                 RegisterCommand(AdminLog.Instance);
                 RegisterCommand(Warn.Instance);
                 RegisterCommand(Showhint.Instance);
+                RegisterCommand(PosTP.Instance);
+                RegisterCommand(CustomInfo.Instance);
+                RegisterCommand(Disco.Instance);
             }
 
             protected override bool ExecuteParent(ArraySegment<string> arguments, ICommandSender sender, out string response)

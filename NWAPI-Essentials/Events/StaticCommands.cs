@@ -15,7 +15,10 @@ namespace NWAPI_Essentials.Events
             try
             {
                 go.transform.localScale = scale;
-                RpcUpdatePlayerScale(target, scale);
+                foreach (Player player in Player.GetPlayers())
+                {
+                    Msg(target, scale);
+                }
             }
             catch (Exception e)
             {
@@ -23,10 +26,9 @@ namespace NWAPI_Essentials.Events
             }
         }
         [ClientRpc]
-        public static void RpcUpdatePlayerScale(Player target, Vector3 scale)
+        public static void Msg(Player target, Vector3 scale)
         {
             target.GameObject.transform.localScale = scale;
         }
-        public static void SetPlayerScale(Player target, float scale) => SetPlayerScale(target, Vector3.one * scale);
     }
 }

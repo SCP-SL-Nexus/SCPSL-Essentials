@@ -1,7 +1,11 @@
 ﻿using CommandSystem;
+using MEC;
+using PlayerRoles;
 using PluginAPI.Core;
 using RemoteAdmin;
 using System;
+using System.Collections.Generic;
+using System.Net.Http.Headers;
 using UnityEngine;
 
 namespace NWAPI_Essentials.Commands
@@ -98,6 +102,7 @@ namespace NWAPI_Essentials.Commands
             }
             Vector3 scale = new Vector3(x, y, z);
             Events.StaticCommands.SetPlayerScale(player, scale);
+            Timing.RunCoroutine(Wait(player), $"Health");
             if (config.language == "en")
             {
                 response = $"Player {playerId}'s size has been changed to {x}, {y}, {z}.";
@@ -107,6 +112,19 @@ namespace NWAPI_Essentials.Commands
             {
                 response = $"Игрок {playerId}, был изменён в размере на {x}, {y}, {z}.";
                 return true;
+            }
+        }
+        private IEnumerator<float> Wait(Player player)
+        {
+            for (; ; )
+            {
+                yield return Timing.WaitForSeconds(3f);
+                if (player.IsAlive == false)
+                {
+                    var t = new Vector3(1f,1f,1f);
+                    Events.StaticCommands.SetPlayerScale(player, t);
+                    break;
+                }
             }
         }
     }

@@ -14,21 +14,21 @@ namespace NWAPI_Essentials
     internal class Plugins
     {
         public string overwatch;
-        public string Version = "v1.0.9";
+        public string Version = "v1.1.0";
         private static readonly Harmony HarmonyPatcher = new Harmony("Essentials.Github.Essentials-Team");
         public static Plugins Singleton { get; set; }
         [PluginConfig]
         public Config Config;
 
         [PluginPriority(LoadPriority.Medium)]
-        [PluginEntryPoint("NWAPI-Essentials", "1.0.9", "Add more admin commands", "Frisk")]
+        [PluginEntryPoint("NWAPI-Essentials", "1.1.0", "Add more admin commands", "Frisk")]
         public void LoadPlugin()
         {
             if (Config.IsEnabled)
             {
                 Log.Info($"Essentials {Version} created by Essentials-Team");
-                HarmonyPatcher.PatchAll();
                 Singleton = this;
+                HarmonyPatcher.PatchAll();
                 var config = Singleton.Config;
                 if (config.Check == true)
                 {
@@ -80,7 +80,7 @@ namespace NWAPI_Essentials
         }
         public static bool IsUpdateAvailable()
         {
-            const string PluginVersion = "1.0.9";
+            const string PluginVersion = "1.1.0";
             const string RepositoryUrl = "https://api.github.com/repos/SCP-SLEssentials-Team/SCPSL-Essentials/releases";
             try
             {
