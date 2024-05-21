@@ -9,16 +9,16 @@ namespace NWAPI_Essentials.Events
     {
         public static void SetPlayerScale(Player target, Vector3 scale)
         {
-            GameObject go = target.GameObject;
+            GameObject go = target.ReferenceHub.gameObject;
             if (go.transform.localScale == scale)
                 return;
             try
             {
+                Vector3 oldScale = go.transform.localScale;
                 go.transform.localScale = scale;
-                foreach (Player player in Player.GetPlayers())
-                {
-                    Msg(target, scale);
-                }
+                float scaleFactor = scale.y / oldScale.y;
+                go.transform.position = new Vector3(go.transform.position.x, go.transform.position.y * scaleFactor, go.transform.position.z);
+                RpcUpdatePlayerScale(target, scale, go.transform.position);
             }
             catch (Exception e)
             {
@@ -26,9 +26,13 @@ namespace NWAPI_Essentials.Events
             }
         }
         [ClientRpc]
-        public static void Msg(Player target, Vector3 scale)
+        private static void RpcUpdatePlayerScale(Player target, Vector3 scale, Vector3 position)
         {
-            target.GameObject.transform.localScale = scale;
+            if (target.GameObject != null)
+            {
+                target.ReferenceHub.gameObject.transform.localScale = scale;
+                target.ReferenceHub.gameObject.transform.position = position;
+            }
         }
     }
 }

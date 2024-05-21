@@ -7,10 +7,10 @@ namespace NWAPI_Essentials.Commands
     {
         [CommandHandler(typeof(RemoteAdminCommandHandler))]
         [CommandHandler(typeof(GameConsoleCommandHandler))]
+        [CommandHandler(typeof(ClientCommandHandler))]
         public class CommandsEs : ParentCommand
         {
             public CommandsEs() => LoadGeneratedCommands();
-
             public sealed override void LoadGeneratedCommands()
             {
                 RegisterCommand(TPS.Instance);
@@ -28,7 +28,6 @@ namespace NWAPI_Essentials.Commands
                 RegisterCommand(CustomInfo.Instance);
                 RegisterCommand(Disco.Instance);
             }
-
             protected override bool ExecuteParent(ArraySegment<string> arguments, ICommandSender sender, out string response)
             {
                 response = "\nPlease enter a valid subcommand:";
@@ -39,7 +38,6 @@ namespace NWAPI_Essentials.Commands
                 }
                 return false;
             }
-
             public override string Command { get; } = "Et";
             public override string[] Aliases { get; } = Array.Empty<string>();
             public override string Description { get; } = "EssentialsCommands.";

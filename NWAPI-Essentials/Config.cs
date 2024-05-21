@@ -13,14 +13,6 @@ namespace NWAPI_Essentials
         public bool Debug { get; set; } = false;
         [Description("Active check version?")]
         public bool Check { get; set; } = true;
-        [Description("Active welcome broadcast?.")]
-        public bool welcome_bc { get; set; } = false;
-
-        [Description("Welcome broadcast message. Use HTML attributes for custom this.")]
-        public string Welcome_bc_meg { get; set; } = "";
-
-        [Description("Welcome broadcast message - duration.")]
-        public int Welcome_bc_dur { get; set; } = 4;
 
         [Description("Godmode for tutorial?.")]
         public bool GodmodeTutorial { get; set; } = false;

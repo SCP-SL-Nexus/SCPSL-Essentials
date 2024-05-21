@@ -11,76 +11,41 @@ namespace NWAPI_Essentials.Commands
         public static Showhint Instance { get; } = new Showhint();
         public string Command { get; } = "Showhint";
         public string[] Aliases { get; } = { "Sh" };
-        public string Description { get; } = "Showhint for player";
+        public string Description { get; } = "Show a hint to a player";
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
             var config = Plugins.Singleton.Config;
+            var lang = config.language;
             if (!sender.CheckPermission(PlayerPermissions.Broadcasting))
             {
-                if (config.language == "en")
-                {
-                    response = "You don't have permission to use this command! (Permission name: Broadcasting)";
-                    return false;
-                }
-                else
-                {
-                    response = "У вас нет разрешения на эту команду! (Название разрешения: Broadcasting)";
-                    return false;
-                }
+                response = lang == "en" ? "You don't have permission to use this command! (Permission name: Broadcasting)" : "У вас нет разрешения на эту команду! (Название разрешения: Broadcasting)";
+                return false;
             }
-            string message = string.Join(" ", arguments.ToArray());
             if (!(sender is PlayerCommandSender playerSender))
             {
-                if (config.language == "en")
-                {
-                    response = "This command can only be used by players.";
-                    return false;
-                }
-                else
-                {
-                    response = "Эта команда может использоваться только на игроках.";
-                    return false;
-                }
-            }
-            if (arguments.Count < 1)
-            {
-                if (config.language == "en")
-                {
-                    response = "You must specify a player ID to target.";
-                    return false;
-                }
-                else
-                {
-                    response = "Вы должны ввести ID игрока.";
-                    return false;
-                }
-            }
-            bool parsed = int.TryParse(arguments.At(0), out int playerId);
-            if (!parsed)
-            {
-                if (config.language == "en")
-                {
-                    response = "Invalid player ID provided.";
-                    return false;
-                }
-                else
-                {
-                    response = "Неправильный ID игрока.";
-                    return false;
-                }
-            }
-            Player pl = Player.Get(playerId);
-            pl.ReceiveHint(message);
-            if (config.language == "en")
-            {
-                response = "Hint show.";
+                response = lang == "en" ? "This command can only be used by players." : "Эта команда может использоваться только на игроках.";
                 return false;
             }
-            else
+            if (arguments.Count < 2)
             {
-                response = "Hint был показан.";
+                response = lang == "en" ? "Usage: Showhint <playerID> <message>" : "Использование: Showhint <playerID> <сообщение>";
                 return false;
             }
+            if (!int.TryParse(arguments.At(0), out int playerId))
+            {
+                response = lang == "en" ? "Invalid player ID provided." : "Неправильный ID игрока.";
+                return false;
+            }
+            var player = Player.Get(playerId);
+            if (player == null)
+            {
+                response = lang == "en" ? "No player found with that ID." : "Игрок с таким ID не найден.";
+                return false;
+            }
+            var message = string.Join(" ", arguments.Skip(1));
+            player.ReceiveHint(message);
+            response = lang == "en" ? "Hint shown." : "Hint был показан.";
+            return true;
         }
     }
 }

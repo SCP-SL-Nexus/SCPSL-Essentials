@@ -4,16 +4,15 @@ using PluginAPI.Events;
 using System.IO;
 using PluginAPI.Core;
 using System;
-using static RoundSummary;
 using System.Collections.Generic;
-using System.Linq;
+using static RoundSummary;
 
 namespace NWAPI_Essentials.Events
 {
     internal class overwatch
     {
         [PluginEvent(ServerEventType.PlayerJoined)]
-        public void Join(PlayerJoinedEvent ev)
+        public void OnPlayerJoined(PlayerJoinedEvent ev)
         {
             try
             {
@@ -25,32 +24,38 @@ namespace NWAPI_Essentials.Events
             }
             catch (Exception e)
             {
-                Log.Debug($"{e.Message}");
+                Log.Debug(e.Message);
             }
         }
         [PluginEvent(ServerEventType.RoundEnd)]
-        public void RoundEnd(LeadingTeam leading)
+        public void OnRoundEnd(LeadingTeam leading)
         {
             try
             {
                 var plugin = Plugins.Singleton;
-                List<string> overwatchRead = File.ReadAllLines(plugin.overwatch).ToList();
-                foreach (Player player in Player.GetPlayers())
+                var overwatchFilePath = plugin.overwatch;
+                var overwatchList = new HashSet<string>(File.ReadAllLines(overwatchFilePath));
+                foreach (var player in Player.GetPlayers())
                 {
-                    string userId = player.UserId;
-
-                    if (player.IsOverwatchEnabled && !overwatchRead.Contains(userId))
-                        overwatchRead.Add(userId);
-                    else if (!player.IsOverwatchEnabled && overwatchRead.Contains(userId))
-                        overwatchRead.Remove(userId);
+                    var userId = player.UserId;
+                    if (player.IsOverwatchEnabled)
+                    {
+                        overwatchList.Add(userId);
+                    }
+                    else
+                    {
+                        overwatchList.Remove(userId);
+                    }
                 }
-                foreach (string s in overwatchRead)
-                    Log.Debug($"{s} is in overwatch.");
-                File.WriteAllLines(plugin.overwatch, overwatchRead);
+                File.WriteAllLines(overwatchFilePath, overwatchList);
+                foreach (var userId in overwatchList)
+                {
+                    Log.Debug($"{userId} is in overwatch.");
+                }
             }
             catch (Exception e)
             {
-                Log.Debug($"{e.Message}");
+                Log.Debug(e.Message);
             }
         }
     }

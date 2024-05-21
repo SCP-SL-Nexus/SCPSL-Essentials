@@ -16,73 +16,37 @@ namespace NWAPI_Essentials.Commands
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
             var config = Plugins.Singleton.Config;
+            bool isEnglish = config.language == "en";
             if (!sender.CheckPermission(PlayerPermissions.PlayersManagement))
             {
-                if (config.language == "en")
-                {
-                    response = "You don't have permission to use this command! (Permission name: PlayersManagement)";
-                    return false;
-                }
-                else
-                {
-                    response = "У вас нету разрешения на эту команду! (Название разрешения: PlayersManagement)";
-                    return false;
-                }
-            }
-            if (!(sender is PlayerCommandSender playerSender))
-            {
-                if (config.language == "en")
-                {
-                    response = "This command can only be used by players.";
-                    return false;
-                }
-                else
-                {
-                    response = "Эта команда может быть использована только на игроках.";
-                    return false;
-                }
-            }
-            bool parsed = int.TryParse(arguments.At(0), out int playerId);
-            if (!parsed)
-            {
-                if (config.language == "en")
-                {
-                    response = "Invalid player ID provided.";
-                    return false;
-                }
-                else
-                {
-                    response = "Недействительное ID игрока.";
-                    return false;
-                }
-            }
-
-            Player player = Player.Get(playerId);
-            if (player == null)
-            {
-                if (config.language == "en")
-                {
-                    response = $"No player found with ID: {playerId}";
-                    return false;
-                }
-                else
-                {
-                    response = $"Игрок с таким ID не найден: {playerId}";
-                    return false;
-                }
-            }
-            string message = string.Join(" ", arguments.Skip(1).ToArray());
-            player.CustomInfo = message;
-            if (config.language == "en")
-            {
-                response = $"CustomInfo {message}, Give to {player}.";
-                return true;
-            }
-            else
-            {
-                response = $"CustomInfo {message}, Был выдан {player}.";
+                response = isEnglish ? "You don't have permission to use this command! (Permission name: PlayersManagement)" : "У вас нету разрешения на эту команду! (Название разрешения: PlayersManagement)";
                 return false;
             }
+            if (!(sender is PlayerCommandSender))
+            {
+                response = isEnglish ? "This command can only be used by players." : "Эта команда может быть использована только на игроках.";
+                return false;
+            }
+            if (arguments.Count < 2)
+            {
+                response = isEnglish ? "You must specify a player ID and a message." : "Вы должны указать ID игрока и сообщение.";
+                return false;
+            }
+            if (!int.TryParse(arguments.At(0), out int playerId))
+            {
+                response = isEnglish ? "Invalid player ID provided." : "Недействительное ID игрока.";
+                return false;
+            }
+            var player = Player.Get(playerId);
+            if (player == null)
+            {
+                response = isEnglish ? $"No player found with ID: {playerId}" : $"Игрок с таким ID не найден: {playerId}";
+                return false;
+            }
+            string message = string.Join(" ", arguments.Skip(1));
+            player.CustomInfo = message;
+            response = isEnglish ? $"CustomInfo '{message}' given to {player.Nickname}." : $"CustomInfo '{message}' был выдан {player.Nickname}.";
+            return true;
         }
     }
 }

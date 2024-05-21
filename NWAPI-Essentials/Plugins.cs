@@ -14,108 +14,89 @@ namespace NWAPI_Essentials
     internal class Plugins
     {
         public string overwatch;
-        public string Version = "v1.1.0";
+        public string Version = "v1.1.1";
         private static readonly Harmony HarmonyPatcher = new Harmony("Essentials.Github.Essentials-Team");
-        public static Plugins Singleton { get; set; }
+        public static Plugins Singleton { get; private set; }
+
         [PluginConfig]
         public Config Config;
 
         [PluginPriority(LoadPriority.Medium)]
-        [PluginEntryPoint("NWAPI-Essentials", "1.1.0", "Add more admin commands", "Frisk")]
+        [PluginEntryPoint("NWAPI-Essentials", "1.1.1", "Add more admin commands", "Frisk")]
         public void LoadPlugin()
         {
-            if (Config.IsEnabled)
-            {
-                Log.Info($"Essentials {Version} created by Essentials-Team");
-                Singleton = this;
-                HarmonyPatcher.PatchAll();
-                var config = Singleton.Config;
-                if (config.Check == true)
-                {
-                    IsUpdateAvailable();
-                }
-                if (config.GodmodeTutorial == true)
-                {
-                    EventManager.RegisterEvents<Events.GodmodeforTutorial>(this);
-                }
-                if (config.autofftogle == true)
-                {
-                    EventManager.RegisterEvents<Events.autoffroggle>(this);
-                }
-                if (config.bc_report == true)
-                {
-                    EventManager.RegisterEvents<Events.BCreport>(this);
-                }
-                if (config.log == true)
-                {
-                    EventManager.RegisterEvents<Events.BanLog>(this);
-                }
-                if (config.ov == true)
-                {
-                    Files();
-                    EventManager.RegisterEvents<Events.overwatch>(this);
-                }
-                EventManager.RegisterEvents(this);
-            }
+            Singleton = this;
+            if (!Config.IsEnabled) return;
+
+            Log.Info($"Essentials {Version} created by Essentials-Team");
+            HarmonyPatcher.PatchAll();
+            RegisterEvents();
+
+            if (Config.Check) IsUpdateAvailable();
+            if (Config.ov) InitializeFiles();
+        }
+
+        private void RegisterEvents()
+        {
+            if (Config.GodmodeTutorial) EventManager.RegisterEvents<Events.GodmodeforTutorial>(this);
+            if (Config.autofftogle) EventManager.RegisterEvents<Events.autoffroggle>(this);
+            if (Config.bc_report) EventManager.RegisterEvents<Events.BCreport>(this);
+            if (Config.log) EventManager.RegisterEvents<Events.BanLog>(this);
+            if (Config.ov) EventManager.RegisterEvents<Events.overwatch>(this);
+
             EventManager.RegisterEvents(this);
         }
-        public void Files()
+
+        private void InitializeFiles()
         {
             try
             {
-                string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                string pluginPath = Path.Combine(appData, "NWAPI-Essential");
                 string path = Path.Combine(Paths.Plugins, "Essentials-save");
-                string overwatchfile = Path.Combine(path, "overwatch.txt");
-                if (!Directory.Exists(path))
-                    Directory.CreateDirectory(path);
-                if (!File.Exists(overwatchfile))
-                    File.Create(overwatchfile).Close();
-                overwatch = overwatchfile;
+                overwatch = Path.Combine(path, "overwatch.txt");
+
+                if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+                if (!File.Exists(overwatch)) File.Create(overwatch).Close();
             }
             catch (Exception e)
             {
-                Log.Debug($"{e.Message}");
+                Log.Debug(e.Message);
             }
         }
+
         public static bool IsUpdateAvailable()
         {
-            const string PluginVersion = "1.1.0";
+            const string PluginVersion = "1.1.1";
             const string RepositoryUrl = "https://api.github.com/repos/SCP-SLEssentials-Team/SCPSL-Essentials/releases";
+
             try
             {
-                HttpClient client = new HttpClient();
+                using HttpClient client = new HttpClient();
                 client.DefaultRequestHeaders.Add("User-Agent", "request");
                 HttpResponseMessage response = client.GetAsync(RepositoryUrl).Result;
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string json = response.Content.ReadAsStringAsync().Result;
-                    JArray releases = JArray.Parse(json);
-
-                    foreach (JObject release in releases)
-                    {
-                        string version = release["tag_name"].ToString();
-                        if (version.CompareTo(PluginVersion) > 0)
-                        {
-                            Log.Info("New version is available: " + version);
-                            return true;
-                        }
-                    }
-                    Log.Info("Your version is up to date.");
-                    return false;
-                }
-                else
+                if (!response.IsSuccessStatusCode)
                 {
                     Log.Error("Failed to fetch release information from GitHub");
+                    return false;
                 }
+                string json = response.Content.ReadAsStringAsync().Result;
+                JArray releases = JArray.Parse(json);
+                foreach (JObject release in releases)
+                {
+                    string version = release["tag_name"].ToString();
+                    if (version.CompareTo(PluginVersion) > 0)
+                    {
+                        Log.Info($"New version available: {version}");
+                        return true;
+                    }
+                }
+                Log.Info("Your version is up to date.");
+                return false;
             }
             catch (Exception e)
             {
-                Log.Error("An error occurred while checking for updates: " + e.Message);
+                Log.Error($"An error occurred while checking for updates: {e.Message}");
+                return false;
             }
-
-            return false;
         }
     }
 }

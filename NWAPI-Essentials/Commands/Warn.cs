@@ -4,6 +4,7 @@ using RemoteAdmin;
 using System;
 using System.Linq;
 using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace NWAPI_Essentials.Commands
 {
@@ -12,138 +13,57 @@ namespace NWAPI_Essentials.Commands
         public static Warn Instance { get; } = new Warn();
         public string Command => "Warn";
         public string[] Aliases => new[] { "W" };
-        public string Description => " Warning User for breaking rules";
-
+        public string Description => "Warning User for breaking rules";
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
             var config = Plugins.Singleton.Config;
+            bool isEnglish = config.language == "en";
             if (!sender.CheckPermission(PlayerPermissions.Overwatch))
             {
-                if (config.language == "en")
-                {
-                    response = "You don't have permission to use this command! (Permission name: Overwatch)";
-                    return false;
-                }
-                else
-                {
-                    response = "У вас нет разрешения на эту команду! (Название разрешения: Overwatch)";
-                    return false;
-                }
+                response = isEnglish ? "You don't have permission to use this command! (Permission name: Overwatch)" : "У вас нет разрешения на эту команду! (Название разрешения: Overwatch)";
+                return false;
             }
-
             if (arguments.Count < 1)
             {
-                if (config.language == "en")
-                {
-                    response = "Use this: PlayerID message";
-                    return false;
-                }
-                else
-                {
-                    response = "Используйте так: ID игрок сообщение";
-                    return false;
-                }
+                response = isEnglish ? "Usage: PlayerID message" : "Используйте так: ID игрок сообщение";
+                return false;
             }
-
-            bool parsed = int.TryParse(arguments.At(0), out int playerId);
-            if (!parsed)
+            if (!int.TryParse(arguments.At(0), out int playerId))
             {
-                if (config.language == "en")
-                {
-                    response = "Invalid player ID provided.";
-                    return false;
-                }
-                else
-                {
-                    response = "Недействительное ID игрока.";
-                    return false;
-                }
+                response = isEnglish ? "Invalid player ID provided." : "Недействительное ID игрока.";
+                return false;
             }
-
             Player player = Player.Get(playerId);
             if (player == null)
             {
-                if (config.language == "en")
-                {
-                    response = $"No player found with ID: {playerId}";
-                    return false;
-                }
-                else
-                {
-                    response = $"Игрок с таким ID не найден: {playerId}";
-                    return false;
-                }
+                response = isEnglish ? $"No player found with ID: {playerId}" : $"Игрок с таким ID не найден: {playerId}";
+                return false;
             }
-            string text;
-            string message = string.Join(" ", arguments.Skip(1).ToArray());
+            string message = string.Join(" ", arguments.Skip(1));
             var playerSender = sender as PlayerCommandSender;
-            string ply = playerSender.Nickname;
-            if (config.language == "en")
+            string senderNickname = playerSender?.Nickname ?? "System";
+            player.SendBroadcast($"<color=red>{(isEnglish ? "You received a warn for " : "Вы получили предупреждение за ")}{message}</color>", 5);
+            string text = $"{player.Nickname}, {player.UserId}, {(isEnglish ? "received a warning for " : "получил предупреждение за ")}{message}";
+            var payload = new
             {
-                player.SendBroadcast($"<color=red>You received a warn for {message}", 5);
-                text = $"{player.Nickname}, {player.UserId}, received a warning for {message}";
-            }
-            else
+                content = config.discord_webhook_style == "text" ? text : null,
+                username = senderNickname,
+                embeds = config.discord_webhook_style == "embed" ? new[] { new { title = "Warn", description = $"```{text}```", color = 2031871 } } : null,
+            };
+            using (var httpClient = new HttpClient())
             {
-                player.SendBroadcast($"<color=red>Вы получили предупреждение за {message}", 5);
-                text = $"{player.Nickname}, {player.UserId}, получил предупреждение за {message}";
-            }
-            if (config != null)
-            {
-                using (var httpClient = new HttpClient())
+                var jsonPayload = JsonConvert.SerializeObject(payload);
+                var httpContent = new StringContent(jsonPayload, System.Text.Encoding.UTF8, "application/json");
+                var responseTask = httpClient.PostAsync(config.discord_webhook_autoban_warn, httpContent);
+                responseTask.Wait();
+                if (responseTask.Result.IsSuccessStatusCode)
                 {
-                    var payload = new
-                    {
-                        content = config.discord_webhook_style == "text" ? text : null,
-                        username = ply,
-                        embeds = config.discord_webhook_style == "embed" ? new[] { new { title = "Warn", description = $"```{text}```", color = 2031871 } } : null,
-                    };
-
-                    var jsonPayload = Newtonsoft.Json.JsonConvert.SerializeObject(payload);
-                    var httpContent = new StringContent(jsonPayload, System.Text.Encoding.UTF8, "application/json");
-
-                    var responseTask = httpClient.PostAsync(config.discord_webhook_autoban_warn, httpContent);
-                    responseTask.Wait();
-
-                    if (responseTask.Result.IsSuccessStatusCode)
-                    {
-                        if (config.language == "en")
-                        {
-                            response = "Message sent!";
-                            return true;
-                        }
-                        else
-                        {
-                            response = "Сообщение отправлено!";
-                            return true;
-                        }
-
-                    }
-                    else
-                    {
-                        if (config.language == "en")
-                        {
-                            response = "Failed to send message.";
-                            return false;
-                        }
-                        else
-                        {
-                            response = "Не получилось отправить сообщение.";
-                            return false;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                if (config.language == "en")
-                {
-                    response = "Config is null.";
-                    return false;
+                    response = isEnglish ? "Message sent!" : "Сообщение отправлено!";
+                    return true;
                 }
                 else
                 {
-                    response = "Config равен нулю.";
+                    response = isEnglish ? "Failed to send message." : "Не получилось отправить сообщение.";
                     return false;
                 }
             }

@@ -17,100 +17,41 @@ namespace NWAPI_Essentials.Commands
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
             var config = Plugins.Singleton.Config;
+            bool isEnglish = config.language == "en";
             if (!sender.CheckPermission(PlayerPermissions.Effects))
             {
-                if (config.language == "en")
-                {
-                    response = "You don't have permission to use this command! (Permission name: Effects)";
-                    return false;
-                }
-                else
-                {
-                    response = "У вас нет разрешения на эту команду! (Название разрешения: Effects)";
-                    return false;
-                }
+                response = isEnglish ? "You don't have permission to use this command! (Permission name: Effects)" : "У вас нет разрешения на эту команду! (Название разрешения: Effects)";
+                return false;
             }
             if (arguments.Count < 1)
             {
-                if (config.language == "en")
-                {
-                    response = "Usage: et Disco on or off";
-                    return false;
-                }
-                else
-                {
-                    response = "Используйте так: et Disco on или off";
-                    return false;
-                }
-
+                response = isEnglish ? "Usage: et Disco on or off" : "Используйте так: et Disco on или off";
+                return false;
             }
-
-            switch (arguments.At(0))
+            switch (arguments.At(0).ToLower())
             {
-                case "On":
-                    if (config.language == "en")
-                    {
-                        response = "The disco turned on";
-                        Timing.RunCoroutine(DiscoPlay(), $"Disco");
-                        return false;
-                    }
-                    else
-                    {
-                        response = "Disco будет включен сейчас";
-                        Timing.RunCoroutine(DiscoPlay(), $"Disco");
-                        return false;
-                    }
+                case "on":
+                    Timing.RunCoroutine(DiscoPlay(), "Disco");
+                    response = isEnglish ? "The disco turned on" : "Disco будет включен сейчас";
+                    return true;
                 case "off":
-                    if (config.language == "en")
-                    {
-                        response = "The disco turned off";
-                        Timing.KillCoroutines("Disco");
-                        return false;
-                    }
-                    else
-                    {
-                        Timing.KillCoroutines("Disco");
-                        response = "Disco будет выключен сейчас";
-                        return false;
-                    }
+                    Timing.KillCoroutines("Disco");
+                    response = isEnglish ? "The disco turned off" : "Disco будет выключен сейчас";
+                    return true;
                 default:
-                    if (config.language == "en")
-                    {
-                        Timing.RunCoroutine(DiscoPlay(), "Disco");
-                        response = "The disco has been turned on or will be turned on now";
-                        return false;
-                    }
-                    else
-                    {
-                        Timing.RunCoroutine(DiscoPlay(), "Disco");
-                        response = "Disco был включен или будет включен сейчас";
-                        return false;
-                    }
+                    response = isEnglish ? "Invalid argument. Use 'on' or 'off'." : "Недопустимый аргумент. Используйте 'on' или 'off'.";
+                    return false;
             }
         }
         private IEnumerator<float> DiscoPlay()
         {
-            for (; ; )
+            var colors = new Color[] { Color.red, Color.cyan, Color.black, Color.white, Color.green, Color.gray, Color.grey, Color.yellow, Color.magenta };
+            while (true)
             {
-                yield return Timing.WaitForSeconds(1f);
+                foreach (var color in colors)
                 {
-                    Map.ChangeColorOfAllLights(Color.red);
-                    Timing.WaitForSeconds(1f);
-                    Map.ChangeColorOfAllLights(Color.cyan);
-                    Timing.WaitForSeconds(1f);
-                    Map.ChangeColorOfAllLights(Color.black);
-                    Timing.WaitForSeconds(1f);
-                    Map.ChangeColorOfAllLights(Color.white);
-                    Timing.WaitForSeconds(1f);
-                    Map.ChangeColorOfAllLights(Color.green);
-                    Timing.WaitForSeconds(1f);
-                    Map.ChangeColorOfAllLights(Color.gray);
-                    Timing.WaitForSeconds(1f);
-                    Map.ChangeColorOfAllLights(Color.grey);
-                    Timing.WaitForSeconds(1f);
-                    Map.ChangeColorOfAllLights(Color.yellow);
-                    Timing.WaitForSeconds(1f);
-                    Map.ChangeColorOfAllLights(Color.magenta);
+                    Map.ChangeColorOfAllLights(color);
+                    yield return Timing.WaitForSeconds(1f);
                 }
             }
         }

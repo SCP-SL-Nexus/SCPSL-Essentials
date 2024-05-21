@@ -16,87 +16,37 @@ namespace NWAPI_Essentials
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
             var config = Plugins.Singleton.Config;
+            bool isEnglish = config.language == "en";
             if (!sender.CheckPermission(PlayerPermissions.Overwatch))
             {
-                if (config.language == "en")
-                {
-                    response = "You don't have permission to use this command! (Permission name: Overwatch)";
-                    return false;
-                }
-                else
-                {
-                    response = "У вас нет разрешения на эту команду! (Название разрешения: Overwatch)";
-                    return false;
-                }
+                response = isEnglish ? "You don't have permission to use this command! (Permission name: Overwatch)" : "У вас нет разрешения на эту команду! (Название разрешения: Overwatch)";
+                return false;
             }
-
-            if (!(sender is PlayerCommandSender playerSender))
+            if (!(sender is PlayerCommandSender))
             {
-                if (config.language == "en")
-                {
-                    response = "This command can only be used by players.";
-                    return false;
-                }
-                else
-                {
-                    response = "Эта команда может использоваться только на игроках.";
-                    return false;
-                }
+                response = isEnglish ? "This command can only be used by players." : "Эта команда может использоваться только на игроках.";
+                return false;
             }
-
             if (arguments.Count < 1)
             {
-                if (config.language == "en")
-                {
-                    response = "You must specify a player ID to target.";
-                    return false;
-                }
-                else
-                {
-                    response = "Вы должны ввести ID игрока.";
-                    return false;
-                }
+                response = isEnglish ? "You must specify a player ID to target." : "Вы должны ввести ID игрока.";
+                return false;
             }
-
-            bool parsed = int.TryParse(arguments.At(0), out int playerId);
-            if (!parsed)
+            if (!int.TryParse(arguments.At(0), out int playerId))
             {
-                if (config.language == "en")
-                {
-                    response = "Invalid player ID provided.";
-                    return false;
-                }
-                else
-                {
-                    response = "Неправильный ID игрока.";
-                    return false;
-                }
+                response = isEnglish ? "Invalid player ID provided." : "Неправильный ID игрока.";
+                return false;
             }
-
-            Player player = Player.Get(playerId);
-            if (player != null)
+            var player = Player.Get(playerId);
+            if (player == null)
             {
-                player.SetRole(RoleTypeId.Spectator);
-                if (config.language == "en")
-                {
-                    player.SendBroadcast("Cheat Check Pass", 5);
-                }
-                else
-                {
-                    player.SendBroadcast("Проверка на читы пройдена", 5);
-                }
+                response = isEnglish ? "No player found with that ID." : "Игрок с таким ID не найден.";
+                return false;
             }
-            if (config.language == "en")
-            {
-                response = "Player role changed to Spectator.";
-                return true;
-            }
-            else
-            {
-                response = "Роль игркоа изменена на Спектора.";
-                return true;
-            }
+            player.SetRole(RoleTypeId.Spectator);
+            player.SendBroadcast(isEnglish ? "Cheat Check Pass" : "Проверка на читы пройдена", 5);
+            response = isEnglish ? "Player role changed to Spectator." : "Роль игрока изменена на Спектора.";
+            return true;
         }
     }
 }
-

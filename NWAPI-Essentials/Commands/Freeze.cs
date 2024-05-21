@@ -3,7 +3,6 @@ using CustomPlayerEffects;
 using PluginAPI.Core;
 using RemoteAdmin;
 using System;
-using UnityEngine;
 
 namespace NWAPI_Essentials.Commands
 {
@@ -12,108 +11,47 @@ namespace NWAPI_Essentials.Commands
         public static Freeze Instance { get; } = new Freeze();
         public string Command { get; } = "Freeze";
         public string[] Aliases { get; } = { "f" };
-        public string Description { get; } = "Freeze a player for Breaking rules";
+        public string Description { get; } = "Freeze a player for breaking rules";
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
             var config = Plugins.Singleton.Config;
             if (!sender.CheckPermission(PlayerPermissions.Effects))
             {
-                if (config.language == "en")
-                {
-                    response = "You don't have permission to use this command! (Permission name: Effects)";
-                    return false;
-                }
-                else
-                {
-                    response = "У вас нет разрешения на эту команду! (Название разрешения: Effects)";
-                    return false;
-                }
+                response = config.language == "en" ? "You don't have permission to use this command! (Permission name: Effects)" : "У вас нет разрешения на эту команду! (Название разрешения: Effects)";
+                return false;
             }
-
-            if (!(sender is PlayerCommandSender playerSender))
+            if (!(sender is PlayerCommandSender))
             {
-                if (config.language == "en")
-                {
-                    response = "This command can only be used by players.";
-                    return false;
-                }
-                else
-                {
-                    response = "Эта команда может быть использована только на игроках.";
-                    return false;
-                }
+                response = config.language == "en"
+                    ? "This command can only be used by players." : "Эта команда может быть использована только на игроках.";
+                return false;
             }
-
             if (arguments.Count < 1)
             {
-                if (config.language == "en")
-                {
-                    response = "You must specify a player ID to target.";
-                    return false;
-                }
-                else
-                {
-                    response = "Вы должны использовать ID игрока.";
-                    return false;
-                }
+                response = config.language == "en" ? "You must specify a player ID to target." : "Вы должны использовать ID игрока.";
+                return false;
             }
-            bool parsed = int.TryParse(arguments.At(0), out int playerId);
-            if (!parsed)
+            if (!int.TryParse(arguments.At(0), out int playerId))
             {
-                if (config.language == "en")
-                {
-                    response = "Invalid player ID provided.";
-                    return false;
-                }
-                else
-                {
-                    response = "Неправильный ID игрока.";
-                    return false;
-                }
+                response = config.language == "en" ? "Invalid player ID provided." : "Неправильный ID игрока.";
+                return false;
             }
-            GameObject playerObject = Player.Get(playerId)?.GameObject;
-            if (playerObject == null)
+            var player = Player.Get(playerId);
+            if (player == null)
             {
-                if (config.language == "en")
-                {
-                    response = "No player found with that ID.";
-                    return false;
-                }
-                else
-                {
-                    response = "Игрок с таким ID не найден.";
-                    return false;
-                }
+                response = config.language == "en" ? "No player found with that ID." : "Игрок с таким ID не найден.";
+                return false;
             }
-            PlayerEffectsController effectsController = playerObject.GetComponent<PlayerEffectsController>();
-            if (effectsController != null)
+            var effectsController = player.GameObject.GetComponent<PlayerEffectsController>();
+            if (effectsController == null)
             {
-                effectsController.EnableEffect<Ensnared>();
-                if (config.language == "en")
-                {
-                    response = "Player is Freezed!";
-                    return true;
-                }
-                else
-                {
-                    response = "Игрок заморожен!";
-                    return true;
-                }
+                response = config.language == "en" ? "Error: Player effects controller not found." : "Ошибка: Контройлер эффектов не был найден.";
+                return false;
             }
-            else
-            {
-                if (config.language == "en")
-                {
-                    response = "Error: Player effects controller not found.";
-                    return false;
-                }
-                else
-                {
-                    response = "Ошибка: Контройлер эффектов не был найден.";
-                    return false;
-                }
-            }
+            effectsController.EnableEffect<Ensnared>();
+            response = config.language == "en" ? "Player is frozen!" : "Игрок заморожен!";
+            return true;
         }
     }
 }
