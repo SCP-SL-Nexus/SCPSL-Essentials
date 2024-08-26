@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace NWAPI_Essentials
 {
@@ -40,5 +41,11 @@ namespace NWAPI_Essentials
 
         [Description("language ( en, ru )")]
         public string language { get; set; } = "en";
+        public List<string> Ranks { get; set; } = new List<string>()
+        {
+            "owner",
+            "admin",
+            "moderator"
+        };
     }
 }

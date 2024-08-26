@@ -7,9 +7,6 @@ namespace NWAPI_Essentials.Events
 {
     internal class autoffroggle
     {
-        [PluginConfig]
-        public Config Config;
-
         [PluginEvent(ServerEventType.RoundEnd)]
         public void RoundEnd(LeadingTeam leading)
         {
