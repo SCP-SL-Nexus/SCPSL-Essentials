@@ -1,5 +1,5 @@
 ﻿using CommandSystem;
-using PluginAPI.Core;
+using LabApi.Features.Wrappers;
 using RemoteAdmin;
 using System;
 using System.Linq;
@@ -43,7 +43,7 @@ namespace NWAPI_Essentials.Commands
                 return false;
             }
             var message = string.Join(" ", arguments.Skip(1));
-            player.ReceiveHint(message);
+            player.SendHint(message);
             response = lang == "en" ? "Hint shown." : "Hint был показан.";
             return true;
         }

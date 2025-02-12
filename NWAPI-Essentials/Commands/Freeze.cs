@@ -1,6 +1,6 @@
 ﻿using CommandSystem;
 using CustomPlayerEffects;
-using PluginAPI.Core;
+using LabApi.Features.Wrappers;
 using RemoteAdmin;
 using System;
 

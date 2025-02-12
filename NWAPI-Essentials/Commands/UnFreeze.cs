@@ -1,7 +1,6 @@
 ﻿using CommandSystem;
 using CustomPlayerEffects;
-using PluginAPI.Core;
-using RemoteAdmin;
+using LabApi.Features.Wrappers;
 using System;
 
 namespace NWAPI_Essentials.Commands

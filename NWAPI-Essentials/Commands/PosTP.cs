@@ -1,5 +1,5 @@
 ﻿using CommandSystem;
-using PluginAPI.Core;
+using LabApi.Features.Wrappers;
 using System;
 
 namespace NWAPI_Essentials.Commands

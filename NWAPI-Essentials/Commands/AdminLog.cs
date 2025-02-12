@@ -1,8 +1,8 @@
 ﻿using CommandSystem;
 using System;
-using System.Linq;
 using System.Net.Http;
-using PluginAPI.Core;
+using LabApi.Features.Console;
+using LabApi.Features.Wrappers;
 
 namespace NWAPI_Essentials.Commands
 {
@@ -52,7 +52,7 @@ namespace NWAPI_Essentials.Commands
             }
             catch (Exception e)
             {
-                Log.Debug(e.Message);
+                Logger.Debug(e.Message);
                 response = config.language == "en" ? "An error occurred!" : "Произошла ошибка!";
                 return true;
             }

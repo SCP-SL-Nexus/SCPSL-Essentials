@@ -1,7 +1,8 @@
-﻿using Mirror;
-using PluginAPI.Core;
+﻿using LabApi.Features.Wrappers;
+using Mirror;
 using System;
 using UnityEngine;
+using Logger = LabApi.Features.Console.Logger;
 
 namespace NWAPI_Essentials.Events
 {
@@ -22,7 +23,7 @@ namespace NWAPI_Essentials.Events
             }
             catch (Exception e)
             {
-                Log.Info($"Set Scale error: {e}");
+                Logger.Info($"Set Scale error: {e}");
             }
         }
         [ClientRpc]

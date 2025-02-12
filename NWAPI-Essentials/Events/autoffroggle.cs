@@ -1,21 +1,20 @@
-﻿using PluginAPI.Core.Attributes;
-using static RoundSummary;
-using PluginAPI.Enums;
-using PluginAPI.Core;
+﻿using LabApi.Events.CustomHandlers;
+using LabApi.Features.Wrappers;
+using LabApi.Events.Arguments.ServerEvents;
 
 namespace NWAPI_Essentials.Events
 {
-    internal class autoffroggle
+    internal class autoffroggle : CustomEventsHandler
     {
-        [PluginEvent(ServerEventType.RoundEnd)]
-        public void RoundEnd(LeadingTeam leading)
-        {
-            Server.FriendlyFire = true;
-        }
-        [PluginEvent(ServerEventType.WaitingForPlayers)]
-        public void RoundStart()
+        public override void OnServerRoundStarted()
         {
             Server.FriendlyFire = false;
+            base.OnServerRoundStarted();
+        }
+        public override void OnServerRoundEnded(RoundEndedEventArgs ev)
+        {
+            Server.FriendlyFire = true;
+            base.OnServerRoundEnded(ev);
         }
     }
 }

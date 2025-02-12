@@ -1,24 +1,20 @@
 ﻿using PlayerRoles;
-using PluginAPI.Core.Attributes;
-using PluginAPI.Core;
-using PluginAPI.Enums;
+using LabApi.Events.CustomHandlers;
+using LabApi.Events.Arguments.PlayerEvents;
 
 namespace NWAPI_Essentials.Events
 {
-    internal class GodmodeforTutorial
+    internal class GodmodeforTutorial : CustomEventsHandler
     {
-        [PluginConfig]
-        public Config Config;
-
-        [PluginEvent(ServerEventType.PlayerChangeRole)]
-        public void ChangeRole(Player player, PlayerRoleBase oldRole, RoleTypeId newRole, RoleChangeReason reason)
+        public override void OnPlayerChangedRole(PlayerChangedRoleEventArgs ev)
         {
-            if (newRole == RoleTypeId.Tutorial)
+            if (ev.NewRole == RoleTypeId.Tutorial)
             {
-                player.IsGodModeEnabled = true;
+                ev.Player.IsGodModeEnabled = true;
             }
             else
-                player.IsGodModeEnabled = false;
+                ev.Player.IsGodModeEnabled = false;
+            base.OnPlayerChangedRole(ev);
         }
     }
 }

@@ -1,10 +1,10 @@
 ﻿using CommandSystem;
-using PluginAPI.Core;
 using RemoteAdmin;
 using System;
 using System.Linq;
 using System.Net.Http;
 using Newtonsoft.Json;
+using LabApi.Features.Wrappers;
 
 namespace NWAPI_Essentials.Commands
 {

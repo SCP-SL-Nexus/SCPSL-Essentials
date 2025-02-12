@@ -1,18 +1,17 @@
-﻿using PluginAPI.Core.Attributes;
-using PluginAPI.Enums;
-using PluginAPI.Events;
-using System.IO;
-using PluginAPI.Core;
+﻿using System.IO;
 using System;
 using System.Collections.Generic;
-using static RoundSummary;
+using LabApi.Events.CustomHandlers;
+using LabApi.Events.Arguments.PlayerEvents;
+using LabApi.Features.Console;
+using LabApi.Events.Arguments.ServerEvents;
+using LabApi.Features.Wrappers;
 
 namespace NWAPI_Essentials.Events
 {
-    internal class overwatch
+    internal class overwatch : CustomEventsHandler
     {
-        [PluginEvent(ServerEventType.PlayerJoined)]
-        public void OnPlayerJoined(PlayerJoinedEvent ev)
+        public override void OnPlayerJoined(PlayerJoinedEventArgs ev)
         {
             try
             {
@@ -24,18 +23,18 @@ namespace NWAPI_Essentials.Events
             }
             catch (Exception e)
             {
-                Log.Debug(e.Message);
+                Logger.Debug(e.Message);
             }
+            base.OnPlayerJoined(ev);
         }
-        [PluginEvent(ServerEventType.RoundEnd)]
-        public void OnRoundEnd(LeadingTeam leading)
+        public override void OnServerRoundEnded(RoundEndedEventArgs ev)
         {
             try
             {
                 var plugin = Plugins.Singleton;
                 var overwatchFilePath = plugin.overwatch;
                 var overwatchList = new HashSet<string>(File.ReadAllLines(overwatchFilePath));
-                foreach (var player in Player.GetPlayers())
+                foreach (var player in Player.List)
                 {
                     var userId = player.UserId;
                     if (player.IsOverwatchEnabled)
@@ -50,13 +49,14 @@ namespace NWAPI_Essentials.Events
                 File.WriteAllLines(overwatchFilePath, overwatchList);
                 foreach (var userId in overwatchList)
                 {
-                    Log.Debug($"{userId} is in overwatch.");
+                    Logger.Debug($"{userId} is in overwatch.");
                 }
             }
             catch (Exception e)
             {
-                Log.Debug(e.Message);
+                Logger.Debug(e.Message);
             }
+            base.OnServerRoundEnded(ev);
         }
     }
 }

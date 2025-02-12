@@ -1,6 +1,6 @@
 ﻿using CommandSystem;
+using LabApi.Features.Wrappers;
 using MEC;
-using PluginAPI.Core;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -50,7 +50,7 @@ namespace NWAPI_Essentials.Commands
             {
                 foreach (var color in colors)
                 {
-                    Map.ChangeColorOfAllLights(color);
+                    Map.SetColorOfLights(color);
                     yield return Timing.WaitForSeconds(1f);
                 }
             }

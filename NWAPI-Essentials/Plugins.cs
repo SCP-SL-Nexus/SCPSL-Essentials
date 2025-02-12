@@ -1,57 +1,67 @@
-﻿using PluginAPI.Core;
-using PluginAPI.Core.Attributes;
-using PluginAPI.Enums;
-using PluginAPI.Events;
-using HarmonyLib;
-using PluginAPI.Helpers;
+﻿using HarmonyLib;
 using System.IO;
 using System;
 using Newtonsoft.Json.Linq;
 using System.Net.Http;
+using LabApi.Features.Console;
+using LabApi.Loader.Features.Plugins;
+using LabApi.Events.CustomHandlers;
+using NWAPI_Essentials.Events;
 
 namespace NWAPI_Essentials
 {
-    internal class Plugins
+    internal class Plugins : Plugin<Config>
     {
         public string overwatch;
-        public string Version = "v1.1.2";
+
         private static readonly Harmony HarmonyPatcher = new Harmony("Essentials.Github.SCPSL-Nexus");
         public static Plugins Singleton { get; private set; }
 
-        [PluginConfig]
-        public Config Config;
+        public override string Name => "NWAPI-Essentials";
 
-        [PluginPriority(LoadPriority.Medium)]
-        [PluginEntryPoint("NWAPI-Essentials", "1.1.2", "Add more admin commands", "Ralsei")]
-        public void LoadPlugin()
+        public override string Description => "Add more admin commands";
+
+        public override string Author => "Ralsei";
+
+        public override Version Version => new Version(1, 1, 2);
+
+        public override Version RequiredApiVersion => new Version(0, 4, 0, 0);
+
+        public autoffroggle autoffroggle = new autoffroggle();
+        public BanLog BanLog => new BanLog();
+        public BCreport BCreport => new BCreport();
+        public GodmodeforTutorial GodmodeforTutorial => new GodmodeforTutorial();
+        public overwatch overwatch1 = new overwatch();
+        public AntiSCPToggle ant = new AntiSCPToggle();
+        public override void Enable()
         {
             Singleton = this;
             if (!Config.IsEnabled) return;
 
-            Log.Info($"Essentials {Version} created by SCPSL-Nexus");
+            Logger.Info($"Essentials {Version} created by SCPSL-Nexus");
             HarmonyPatcher.PatchAll();
-            RegisterEvents();
-
+            if (Config.GodmodeTutorial) CustomHandlersManager.RegisterEventsHandler(GodmodeforTutorial);
+            if (Config.autofftogle) CustomHandlersManager.RegisterEventsHandler(autoffroggle);
+            if (Config.bc_report) CustomHandlersManager.RegisterEventsHandler(BCreport);
+            if (Config.log) CustomHandlersManager.RegisterEventsHandler(BanLog);
+            if (Config.ov) CustomHandlersManager.RegisterEventsHandler(overwatch1);
+            if (Config.antiscp) CustomHandlersManager.RegisterEventsHandler(ant);
             if (Config.Check) IsUpdateAvailable();
             if (Config.ov) InitializeFiles();
         }
-
-        private void RegisterEvents()
+        public override void Disable()
         {
-            if (Config.GodmodeTutorial) EventManager.RegisterEvents<Events.GodmodeforTutorial>(this);
-            if (Config.autofftogle) EventManager.RegisterEvents<Events.autoffroggle>(this);
-            if (Config.bc_report) EventManager.RegisterEvents<Events.BCreport>(this);
-            if (Config.log) EventManager.RegisterEvents<Events.BanLog>(this);
-            if (Config.ov) EventManager.RegisterEvents<Events.overwatch>(this);
-
-            EventManager.RegisterEvents(this);
+            if (Config.GodmodeTutorial) CustomHandlersManager.UnregisterEventsHandler(GodmodeforTutorial);
+            if (Config.autofftogle) CustomHandlersManager.UnregisterEventsHandler(autoffroggle);
+            if (Config.bc_report) CustomHandlersManager.UnregisterEventsHandler(BCreport);
+            if (Config.log) CustomHandlersManager.UnregisterEventsHandler(BanLog);
+            if (Config.ov) CustomHandlersManager.UnregisterEventsHandler(overwatch1);
         }
-
         private void InitializeFiles()
         {
             try
             {
-                string path = Path.Combine(Paths.Plugins, "Essentials-save");
+                string path = Path.Combine(LabApi.Loader.Features.Paths.PathManager.Configs.ToString(), "Essentials-save");
                 overwatch = Path.Combine(path, "overwatch.txt");
 
                 if (!Directory.Exists(path)) Directory.CreateDirectory(path);
@@ -59,7 +69,7 @@ namespace NWAPI_Essentials
             }
             catch (Exception e)
             {
-                Log.Debug(e.Message);
+                Logger.Debug(e.Message);
             }
         }
 
@@ -75,7 +85,7 @@ namespace NWAPI_Essentials
                 HttpResponseMessage response = client.GetAsync(RepositoryUrl).Result;
                 if (!response.IsSuccessStatusCode)
                 {
-                    Log.Error("Failed to fetch release information from GitHub");
+                    Logger.Error("Failed to fetch release information from GitHub");
                     return false;
                 }
                 string json = response.Content.ReadAsStringAsync().Result;
@@ -85,16 +95,16 @@ namespace NWAPI_Essentials
                     string version = release["tag_name"].ToString();
                     if (version.CompareTo(PluginVersion) > 0)
                     {
-                        Log.Info($"New version available: {version}");
+                        Logger.Info($"New version available: {version}");
                         return true;
                     }
                 }
-                Log.Info("Your version is up to date.");
+                Logger.Info("Your version is up to date.");
                 return false;
             }
             catch (Exception e)
             {
-                Log.Error($"An error occurred while checking for updates: {e.Message}");
+                Logger.Error($"An error occurred while checking for updates: {e.Message}");
                 return false;
             }
         }

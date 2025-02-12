@@ -1,6 +1,6 @@
 ﻿using CommandSystem;
 using System;
-using PluginAPI.Core;
+using LabApi.Features.Wrappers;
 
 namespace NWAPI_Essentials.Commands
 {
@@ -15,7 +15,7 @@ namespace NWAPI_Essentials.Commands
         {
             var config = Plugins.Singleton.Config;
             var lang = config.language;
-            response = lang == "en" ?  $"Server TPS: {Server.TPS}" : $"TPS Сервера: {Server.TPS}";
+            response = lang == "en" ? $"Server TPS: {Server.TPS}" : $"TPS Сервера: {Server.TPS}";
             return false;
         }
     }
