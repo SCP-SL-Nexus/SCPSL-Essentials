@@ -74,7 +74,7 @@ namespace Essentials
             }
         }
 
-        public static bool IsUpdateAvailable()
+        private static bool IsUpdateAvailable()
         {
             const string PluginVersion = "1.1.3";
             const string RepositoryUrl = "https://api.github.com/repos/SCP-SLEssentials-Team/SCPSL-Essentials/releases";
