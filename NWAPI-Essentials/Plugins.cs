@@ -73,7 +73,7 @@ namespace NWAPI_Essentials
             }
         }
 
-        public static bool IsUpdateAvailable()
+        private static bool IsUpdateAvailable()
         {
             const string PluginVersion = "1.1.2";
             const string RepositoryUrl = "https://api.github.com/repos/SCP-SLEssentials-Team/SCPSL-Essentials/releases";
