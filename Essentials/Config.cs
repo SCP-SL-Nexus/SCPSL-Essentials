@@ -40,5 +40,7 @@ namespace Essentials
             "admin",
             "moderator"
         };
+        [Description("Custom color for embed")]
+        public int color = 2031871;
     }
 }

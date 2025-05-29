@@ -1,7 +1,8 @@
-﻿using LabApi.Events.CustomHandlers;
-using LabApi.Events.Arguments.PlayerEvents;
-using LabApi.Features.Wrappers;
+﻿using LabApi.Events.Arguments.PlayerEvents;
+using LabApi.Events.CustomHandlers;
 using LabApi.Features.Console;
+using LabApi.Features.Wrappers;
+using System.Text.RegularExpressions;
 
 namespace Essentials.Events
 {
@@ -21,7 +22,7 @@ namespace Essentials.Events
             {
                 foreach (var t in config.Ranks)
                 {
-                    if (p.ReferenceHub.serverRoles.Network_myText == t)
+                    if (p.UserGroup.Name == t)
                     {
                         p.SendBroadcast(message, 9);
                     }
@@ -44,7 +45,7 @@ namespace Essentials.Events
             {
                 foreach (var t in config.Ranks)
                 {
-                    if (p.ReferenceHub.serverRoles.Network_myText == t)
+                    if (p.UserGroup.Name == t)
                     {
                         p.SendBroadcast(message, 9);
                     }

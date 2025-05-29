@@ -23,7 +23,7 @@ namespace Essentials
 
         public override string Author => "SCPSL-Nexus";
 
-        public override Version Version => new Version(1, 1, 3);
+        public override Version Version => new Version(1, 1, 4);
 
         public override Version RequiredApiVersion => new Version(0, 4, 0, 0);
 
@@ -34,7 +34,7 @@ namespace Essentials
         public overwatch overwatch1 = new overwatch();
         public AntiSCPToggle ant = new AntiSCPToggle();
 
-        public override async void Enable()
+        public override void Enable()
         {
             Singleton = this;
 
@@ -76,7 +76,7 @@ namespace Essentials
 
         public static bool IsUpdateAvailable()
         {
-            const string PluginVersion = "1.1.3";
+            const string PluginVersion = "1.1.4";
             const string RepositoryUrl = "https://api.github.com/repos/SCP-SLEssentials-Team/SCPSL-Essentials/releases";
 
             try
