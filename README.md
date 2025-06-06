@@ -28,6 +28,7 @@
 
 - **Size Modification**
   - `Size`: Changes the player’s scale.
+  - `FakeSize`: Changes the player’s scale and make they not real.
 
 - **Cheat Check**
   - `CheatCheck`: Marks a player to cheat check.
