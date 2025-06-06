@@ -75,7 +75,7 @@
 | `TPS`                | None                |
 | `Invis`, `Visible`   | `Effect`            |
 | `Freeze`, `UnFreeze` | `Effect`            |
-| `Size`               | `PLM`               |
+| `Size`, `FakeSuze`              | `PLM`               |
 | `CheatCheck`, `CheatCheckPassed`, `Log`, `Warn` | `Overwatch` |
 
 ---
