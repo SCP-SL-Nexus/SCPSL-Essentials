@@ -85,6 +85,7 @@
     <Compile Include="commands\Commands.cs" />
     <Compile Include="commands\CustomInfo.cs" />
     <Compile Include="commands\Disco.cs" />
+    <Compile Include="commands\FakeSize.cs" />
     <Compile Include="commands\Freeze.cs" />
     <Compile Include="commands\Invis.cs" />
     <Compile Include="commands\PosTP.cs" />
@@ -100,8 +101,9 @@
     <Compile Include="events\BanLog.cs" />
     <Compile Include="events\BCreport.cs" />
     <Compile Include="events\GodmodeforTutorial.cs" />
-    <Compile Include="events\overwatch.cs" />
+    <Compile Include="events\Hide.cs" />
     <Compile Include="events\StaticCommands.cs" />
+    <Compile Include="pathes\NetworkServerInvoker.cs" />
     <Compile Include="Plugins.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

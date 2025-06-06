@@ -2,7 +2,6 @@
 using LabApi.Events.CustomHandlers;
 using LabApi.Features.Console;
 using LabApi.Features.Wrappers;
-using System.Text.RegularExpressions;
 
 namespace Essentials.Events
 {

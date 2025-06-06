@@ -13,6 +13,7 @@ namespace Essentials
     internal class Plugins : Plugin<Config>
     {
         public string overwatch;
+        public string tag;
 
         private static readonly Harmony HarmonyPatcher = new Harmony("Essentials.Github.SCPSL-Nexus");
         public static Plugins Singleton { get; private set; }
@@ -23,15 +24,15 @@ namespace Essentials
 
         public override string Author => "SCPSL-Nexus";
 
-        public override Version Version => new Version(1, 1, 4);
+        public override Version Version => new Version(1, 1, 5);
 
-        public override Version RequiredApiVersion => new Version(0, 4, 0, 0);
+        public override Version RequiredApiVersion => new Version(1, 0, 0, 0);
 
         public autoffroggle autoffroggle = new autoffroggle();
         public BanLog BanLog => new BanLog();
         public BCreport BCreport => new BCreport();
         public GodmodeforTutorial GodmodeforTutorial => new GodmodeforTutorial();
-        public overwatch overwatch1 = new overwatch();
+        public Hide overwatch1 = new Hide();
         public AntiSCPToggle ant = new AntiSCPToggle();
 
         public override void Enable()
@@ -45,10 +46,10 @@ namespace Essentials
             if (Config.autofftogle) CustomHandlersManager.RegisterEventsHandler(autoffroggle);
             if (Config.bc_report) CustomHandlersManager.RegisterEventsHandler(BCreport);
             if (Config.log) CustomHandlersManager.RegisterEventsHandler(BanLog);
-            if (Config.ov) CustomHandlersManager.RegisterEventsHandler(overwatch1);
+            if (Config.save) CustomHandlersManager.RegisterEventsHandler(overwatch1);
             if (Config.antiscp) CustomHandlersManager.RegisterEventsHandler(ant);
             if (Config.Check) IsUpdateAvailable();
-            if (Config.ov) InitializeFiles();
+            if (Config.save) InitializeFiles();
         }
         public override void Disable()
         {
@@ -56,7 +57,7 @@ namespace Essentials
             if (Config.autofftogle) CustomHandlersManager.UnregisterEventsHandler(autoffroggle);
             if (Config.bc_report) CustomHandlersManager.UnregisterEventsHandler(BCreport);
             if (Config.log) CustomHandlersManager.UnregisterEventsHandler(BanLog);
-            if (Config.ov) CustomHandlersManager.UnregisterEventsHandler(overwatch1);
+            if (Config.save) CustomHandlersManager.UnregisterEventsHandler(overwatch1);
         }
         private void InitializeFiles()
         {
@@ -64,9 +65,11 @@ namespace Essentials
             {
                 string path = Path.Combine(LabApi.Loader.Features.Paths.PathManager.Configs.ToString(), "Essentials-save");
                 overwatch = Path.Combine(path, "overwatch.txt");
+                tag = Path.Combine(path, "tag.txt");
 
                 if (!Directory.Exists(path)) Directory.CreateDirectory(path);
                 if (!File.Exists(overwatch)) File.Create(overwatch).Close();
+                if (!File.Exists(tag)) File.Create(tag).Close();
             }
             catch (Exception e)
             {
@@ -76,7 +79,7 @@ namespace Essentials
 
         public static bool IsUpdateAvailable()
         {
-            const string PluginVersion = "1.1.4";
+            const string PluginVersion = "1.1.5";
             const string RepositoryUrl = "https://api.github.com/repos/SCP-SLEssentials-Team/SCPSL-Essentials/releases";
 
             try

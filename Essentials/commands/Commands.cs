@@ -1,4 +1,5 @@
 ﻿using CommandSystem;
+using Essentials.commands;
 using System;
 
 namespace Essentials.Commands
@@ -27,6 +28,7 @@ namespace Essentials.Commands
                 RegisterCommand(PosTP.Instance);
                 RegisterCommand(CustomInfo.Instance);
                 RegisterCommand(Disco.Instance);
+                RegisterCommand(FakeSize.Instance);
             }
             protected override bool ExecuteParent(ArraySegment<string> arguments, ICommandSender sender, out string response)
             {

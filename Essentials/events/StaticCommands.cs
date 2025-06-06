@@ -1,5 +1,5 @@
-﻿using LabApi.Features.Wrappers;
-using Mirror;
+﻿using Essentials.pathes;
+using LabApi.Features.Wrappers;
 using System;
 using UnityEngine;
 using Logger = LabApi.Features.Console.Logger;
@@ -10,29 +10,40 @@ namespace Essentials.Events
     {
         public static void SetPlayerScale(Player target, Vector3 scale)
         {
-            GameObject go = target.ReferenceHub.gameObject;
-            if (go.transform.localScale == scale)
+            if (target.ReferenceHub.transform.localScale == scale)
                 return;
+
             try
             {
-                Vector3 oldScale = go.transform.localScale;
-                go.transform.localScale = scale;
-                float scaleFactor = scale.y / oldScale.y;
-                go.transform.position = new Vector3(go.transform.position.x, go.transform.position.y * scaleFactor, go.transform.position.z);
-                RpcUpdatePlayerScale(target, scale, go.transform.position);
+                target.ReferenceHub.transform.localScale = scale;
+
+                foreach (Player plr in Player.List)
+                    NetworkServerInvoker.InvokeSendSpawnMessage(target.ReferenceHub.networkIdentity, plr.Connection);
             }
             catch (Exception e)
             {
                 Logger.Info($"Set Scale error: {e}");
             }
         }
-        [ClientRpc]
-        private static void RpcUpdatePlayerScale(Player target, Vector3 scale, Vector3 position)
+        public static void SetFakePlayerScale(Player target, Vector3 scale)
         {
-            if (target.GameObject != null)
+            var original = target.ReferenceHub.transform.localScale;
+
+            if (target.ReferenceHub.transform.localScale == scale)
+                return;
+
+            try
             {
-                target.ReferenceHub.gameObject.transform.localScale = scale;
-                target.ReferenceHub.gameObject.transform.position = position;
+                target.ReferenceHub.transform.localScale = scale;
+
+                foreach (Player plr in Player.List)
+                    NetworkServerInvoker.InvokeSendSpawnMessage(target.ReferenceHub.networkIdentity, plr.Connection);
+
+                target.ReferenceHub.transform.localScale = original;
+            }
+            catch (Exception e)
+            {
+                Logger.Info($"Set Scale error: {e}");
             }
         }
     }

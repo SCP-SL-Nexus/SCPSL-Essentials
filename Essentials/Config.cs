@@ -16,8 +16,8 @@ namespace Essentials
 
         [Description("Active BCreport?.")]
         public bool bc_report { get; set; } = false;
-        [Description("Active Save Overwacth?.")]
-        public bool ov { get; set; } = false;
+        [Description("Active Save Overwacth & Tag?")]
+        public bool save { get; set; } = false;
         [Description("Active AntiSCP ( do not track 173 and 096 on Tutorial )?.")]
         public bool antiscp { get; set; } = false;
         [Description("Discord Webhook ( if URL =https://discord.com/api/webhooks/ADD_YOUR_URL, command don't work ).")]
