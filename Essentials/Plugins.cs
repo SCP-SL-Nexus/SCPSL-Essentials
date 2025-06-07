@@ -58,6 +58,7 @@ namespace Essentials
             if (Config.bc_report) CustomHandlersManager.UnregisterEventsHandler(BCreport);
             if (Config.log) CustomHandlersManager.UnregisterEventsHandler(BanLog);
             if (Config.save) CustomHandlersManager.UnregisterEventsHandler(overwatch1);
+            if (Config.antiscp) CustomHandlersManager.UnregisterEventsHandler(ant);
         }
         private void InitializeFiles()
         {
